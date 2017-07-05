@@ -1,0 +1,50 @@
+<header class="row">
+    <div class="col-xs-10 regular-nums"></div>
+    <div class="col-xs-2 strong-nums table-title cell-item text-center">
+        חזק
+        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+    </div>
+</header>
+<div class="row table-wrap">
+    <!-- regular numbers -->
+    <div class="col-xs-10 table-regular-nums">
+        <div class="row">
+            <div *ngFor="let value of regularNums; let ix = index">
+                <br *ngIf="isNewLine_regular(ix)">
+                <div *ngIf="ix === 0"
+                     style="width:30%"
+                     class="col-xs-3 table-title cell-item text-center">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    טבלה 1
+                </div>
+                <div class="col-xs-1 cell-item">
+                    <span class="title text-center">{{ix+1}}</span>
+                    <span class="input text-center" [class.selected]="value === 1">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- strong numbers -->
+    <div class="col-xs-2 table-strong-nums">
+        <div class="row">
+            <div *ngFor="let value of strongNums; let ix = index">
+                <br *ngIf="isNewLine_stong(ix)">
+                <div *ngIf="ix === 0" class="col-xs-6 table-title cell-item text-center">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                </div>
+                <div class="col-xs-6 cell-item">
+                    <span class="title text-center">{{ix+1}}</span>
+                    <span class="input text-center" [class.selected]="value === 1">_</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls-wrap text-center mt-30">
+    <button class="btn btn-lg btn-primary btn-generate"
+            (click)="generateNumbers()">
+        הגרל
+    </button>
+</div>

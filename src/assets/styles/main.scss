@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Assistant:700');
+
+body{
+  background-color: #fefadf;
+  direction: rtl;
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.row{
+  line-height: 30px;
+}
+.cell-item{
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.mb-5 {
+  margin-bottom:5px !important;
+}
+.mt-30 {
+  margin-top:30px !important;
+}
+.glyphicon{
+  top: 2px;
+}

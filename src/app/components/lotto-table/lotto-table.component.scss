@@ -1,0 +1,59 @@
+$yellow: #fde882;
+
+.table-regular-nums{
+  background-color: #ffe0e6;
+}
+header .table-title{
+  background-color: $yellow;
+  color: red;
+}
+.table-wrap {
+  .table-title{
+    background-color: red;
+    color: white !important;
+    span{
+      color: white;
+    }
+  }
+  .cell-item {
+    min-width:10%;
+    color: red;
+    .title{
+      display: block;
+      line-height: 12px;
+    }
+    .input{
+      display: block;
+      border: 1px solid red;
+      border-radius: 7px;
+      line-height: 15px;
+      &.selected{
+        background-color: #848484 !important;
+        color: #848484 !important;
+      }
+    }
+  }
+  .table-regular-nums {
+    .cell-item .input{
+      background-color: white;
+      color: white;
+    }
+  }
+  .table-strong-nums {
+    .cell-item .input{
+      background-color: $yellow;
+      color: $yellow;
+    }
+  }
+}
+.controls-wrap {
+  .btn-generate {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 2px 3px 6px #7a7a7a;
+    &:focus {
+      outline: none;
+    }
+  }
+}
