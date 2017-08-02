@@ -5,10 +5,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from "@angular/core";
 
-import {LottoTableComponent} from "./components/lotto-table/lotto-table.component";
+import { LottoTableComponent } from "./components/lotto-table/lotto-table.component";
+import { ResultsComponent } from "./components/results/results.component";
 
 export const ROUTES: Routes = [
     { path: '', component: LottoTableComponent },
+    { path: 'results', component: ResultsComponent },
     {
         path: '',
         redirectTo: '/',
