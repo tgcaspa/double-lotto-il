@@ -23,6 +23,7 @@ header .table-title{
       line-height: 12px;
     }
     .input{
+      cursor: pointer;
       display: block;
       border: 1px solid red;
       border-radius: 7px;
@@ -47,11 +48,9 @@ header .table-title{
   }
 }
 .controls-wrap {
-  .btn-generate {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    box-shadow: 2px 3px 6px #7a7a7a;
+  .btn {
+    //width: 100%;
+    box-shadow: 1px 2px 6px #7a7a7a;
     &:focus {
       outline: none;
     }

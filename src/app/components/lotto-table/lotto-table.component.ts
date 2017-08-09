@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 
+declare let $:any;
+declare let _:any;
+
 @Component({
     selector: 'lotto-table',
     templateUrl: './lotto-table.component.html',
@@ -49,6 +52,10 @@ export class LottoTableComponent implements OnInit {
         this.generateStrongNums();
     }
 
+    storeNumbers() {
+        console.log('storing numbers...');
+    }
+
     private generateRegularNums() {
         let collection = [];
         for (let ix = 0; ix < this.REGULAR_MAX_SELECT; ix++) {
@@ -73,6 +80,29 @@ export class LottoTableComponent implements OnInit {
             this.strongNums[n] = 1;
         }
         console.log(`strong: ${collection}`);
+    }
+
+    cellClicked(e: Event, ix: number, type: string) {
+        const selected = $(e.target).hasClass('selected');
+        const val = Number(!selected);
+        switch(type) {
+            case 'regular':
+                const countRegular = _.filter(this.regularNums, function(n){ return n === 1});
+                if(val && countRegular.length >= this.REGULAR_MAX_SELECT) {
+                    alert(`אפשר לבחור לא יותר מ-${this.REGULAR_MAX_SELECT} מספרים רגילים.`);
+                    return;
+                }
+                this.regularNums[ix] = val;
+                break;
+            case 'strong':
+                const countStrong = _.filter(this.strongNums, function(n){ return n === 1});
+                if(val && countStrong.length >= this.STRONG_MAX_SELECT) {
+                    alert(`אפשר לבחור לא יותר מ-${this.STRONG_MAX_SELECT} מספר חזק.`);
+                    return;
+                }
+                this.strongNums[ix] = val;
+                break;
+        }
     }
 
 }
