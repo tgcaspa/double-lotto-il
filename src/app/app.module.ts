@@ -7,20 +7,27 @@ import { AppComponent } from './app.component';
 import { LottoTableComponent } from './components/lotto-table/lotto-table.component';
 import { MainHeaderComponent } from './components/layout/header/main-header/main-header.component';
 import { ResultsComponent } from './components/results/results.component';
+import { LottoSaveModalComponent } from './components/lotto-save-modal/lotto-save-modal.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ModalModule } from "ngx-bootstrap";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LottoTableComponent,
-    MainHeaderComponent,
-    ResultsComponent
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    AppRouting
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LottoTableComponent,
+        MainHeaderComponent,
+        ResultsComponent,
+        LottoSaveModalComponent
+    ],
+    imports: [
+        BrowserModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRouting,
+        ModalModule.forRoot()
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

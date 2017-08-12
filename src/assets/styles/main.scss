@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Assistant:700');
+@import 'variables';
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
 
 body{
   background-color: #fefadf;
-  direction: rtl;
+  direction: rtl !important;
   font-family: 'Assistant', sans-serif;
-  font-size: 1.3em;
-  font-weight: bold;
 }
 .row{
-  line-height: 30px;
+  line-height: 24px;
 }
 .cell-item{
   padding-left: 0.5em;
@@ -24,11 +24,17 @@ body{
   margin-top:30px !important;
 }
 .glyphicon{
-  top: 2px;
+  top: 1px;
+  font-size: 10px;
 }
 .bt-dashed-2 {
   border-top: 2px dashed;
 }
 .bb-dashed-2 {
   border-bottom: 2px dashed;
+}
+.btn {
+  border-radius: 0;
+  width: 50%;
+  &:focus { outline: none; }
 }

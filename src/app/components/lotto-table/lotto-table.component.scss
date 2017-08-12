@@ -3,7 +3,7 @@ $yellow: #fde882;
 .table-regular-nums{
   background-color: #ffe0e6;
 }
-header .table-title{
+.table-title{
   background-color: $yellow;
   color: red;
 }
@@ -11,6 +11,7 @@ header .table-title{
   .table-title{
     background-color: red;
     color: white !important;
+    line-height: 22px;
     span{
       color: white;
     }
@@ -18,6 +19,7 @@ header .table-title{
   .cell-item {
     min-width:10%;
     color: red;
+    height: 22px;
     .title{
       display: block;
       line-height: 12px;
@@ -27,7 +29,7 @@ header .table-title{
       display: block;
       border: 1px solid red;
       border-radius: 7px;
-      line-height: 15px;
+      line-height: 8px;
       &.selected{
         background-color: #848484 !important;
         color: #848484 !important;
@@ -44,15 +46,6 @@ header .table-title{
     .cell-item .input{
       background-color: $yellow;
       color: $yellow;
-    }
-  }
-}
-.controls-wrap {
-  .btn {
-    //width: 100%;
-    box-shadow: 1px 2px 6px #7a7a7a;
-    &:focus {
-      outline: none;
     }
   }
 }

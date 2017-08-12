@@ -1,0 +1,44 @@
+<button class="btn btn-outline-primary btn-save"
+        (click)="openModal(template)">
+    לך על זה
+</button>
+<!-- Modal -->
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-right">שמירת מספרי המזל שלך</h4>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form"
+              (ngSubmit)="saveLottoNumbers(form.value)">
+            <div class="form-group text-right">
+                <label for="passport">4 ספרות אחרונות של ת"ז</label>
+                <input type="number"
+                       formControlName="passport"
+                       id="passport"
+                       class="form-control"
+                       placeholder="xxxx"/>
+                <small [hidden]="form.get('passport').pristine || form.get('passport').valid"
+                       class="text-danger">זהו שדה חובה</small>
+            </div>
+            <div class="form-group text-right">
+                <label for="phone">מספר נייד</label>
+                <input type="tel"
+                       formControlName="phone"
+                       id="phone"
+                       class="form-control"
+                       placeholder="xxxxxxxxxx"/>
+                <small [hidden]="form.get('phone').pristine || form.get('phone').valid"
+                       class="text-danger">זהו שדה חובה</small>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+                class="btn btn-outline-primary"
+                (click)="modalRef.hide()">
+            סגור</button>
+        <button type="submit"
+                class="btn btn-outline-primary">
+            שמור</button>
+    </div>
+</ng-template>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 declare let $:any;
 declare let _:any;
@@ -18,8 +18,9 @@ export class LottoTableComponent implements OnInit {
     regularNums = [];
     strongNums = [];
 
-    constructor() {
-    }
+    @ViewChild('lotto-save-modal') modal;
+
+    constructor() {}
 
     ngOnInit() {
         this.initRegularNums();
@@ -50,10 +51,6 @@ export class LottoTableComponent implements OnInit {
         this.initStrongNums();
         this.generateRegularNums();
         this.generateStrongNums();
-    }
-
-    storeNumbers() {
-        console.log('storing numbers...');
     }
 
     private generateRegularNums() {
@@ -89,7 +86,7 @@ export class LottoTableComponent implements OnInit {
             case 'regular':
                 const countRegular = _.filter(this.regularNums, function(n){ return n === 1});
                 if(val && countRegular.length >= this.REGULAR_MAX_SELECT) {
-                    alert(`אפשר לבחור לא יותר מ-${this.REGULAR_MAX_SELECT} מספרים רגילים.`);
+                    alert(`אפשר לבחור לא יותר משישה מספרים רגילים.`);
                     return;
                 }
                 this.regularNums[ix] = val;
@@ -97,7 +94,7 @@ export class LottoTableComponent implements OnInit {
             case 'strong':
                 const countStrong = _.filter(this.strongNums, function(n){ return n === 1});
                 if(val && countStrong.length >= this.STRONG_MAX_SELECT) {
-                    alert(`אפשר לבחור לא יותר מ-${this.STRONG_MAX_SELECT} מספר חזק.`);
+                    alert(`אפשר לבחור לא יותר ממספר אחד חזק.`);
                     return;
                 }
                 this.strongNums[ix] = val;
