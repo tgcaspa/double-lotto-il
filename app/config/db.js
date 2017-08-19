@@ -4,10 +4,20 @@
 
 'use strict';
 
-var dbConfig = {
+var _config = {
+    instance: 'mongodb',
     schema: 'lotto',
     host: 'localhost',
     port: 27017
 };
 
-module.exports = require('depd')('db-config');
+function dbConfig() {}
+
+dbConfig.prototype.getConnection = function () {
+    return _config.instance+'://'+_config.host+':'+_config.port+'/'+_config.schema;
+}
+
+/**
+ * Module exports.
+ */
+module.exports = new dbConfig;

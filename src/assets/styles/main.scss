@@ -35,6 +35,6 @@ body{
 }
 .btn {
   border-radius: 0;
-  width: 50%;
+  min-width: 50%;
   &:focus { outline: none; }
 }

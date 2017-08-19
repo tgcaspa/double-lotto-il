@@ -5,7 +5,7 @@
     <div class="col-10 regular-nums"></div>
     <div class="col-2 strong-nums table-title cell-item text-center">
         <strong>חזק</strong>
-        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+        <fa name="caret-down"></fa>
     </div>
 </div>
 <!---->
@@ -18,7 +18,7 @@
                 <div *ngIf="ix === 0"
                      style="width:30%"
                      class="col-3 table-title cell-item text-center">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    <fa name="caret-right"></fa>
                     <strong>טבלה 1</strong>
                 </div>
                 <div class="col-1 cell-item">
@@ -55,15 +55,12 @@
     <div class="col-6 text-left">
         <button class="btn btn-outline-primary btn-generate"
                 (click)="generateNumbers()">
+            <fa name="star-o"></fa>
             הגרל
         </button>
     </div>
     <div class="col-6 text-right">
-        <!--<button class="btn btn-outline-primary btn-save"-->
-        <!--(click)="modal.openModal(template)">-->
-        <!--לך על זה-->
-        <!--</button>-->
-        <lotto-save-modal #modal></lotto-save-modal>
+        <lotto-save-modal #saveModal></lotto-save-modal>
     </div>
 </div>
 <!---->

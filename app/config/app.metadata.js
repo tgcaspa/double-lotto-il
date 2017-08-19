@@ -6,3 +6,8 @@ var appMetadata = {
     name: 'Lotto',
     port: 4200
 };
+
+/**
+ * Module exports.
+ */
+module.exports = appMetadata;

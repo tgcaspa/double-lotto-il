@@ -10,6 +10,7 @@ import { ResultsComponent } from './components/results/results.component';
 import { LottoSaveModalComponent } from './components/lotto-save-modal/lotto-save-modal.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ModalModule } from "ngx-bootstrap";
+import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { ModalModule } from "ngx-bootstrap";
         FormsModule,
         ReactiveFormsModule,
         AppRouting,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        AngularFontAwesomeModule
     ],
     providers: [],
     bootstrap: [AppComponent]

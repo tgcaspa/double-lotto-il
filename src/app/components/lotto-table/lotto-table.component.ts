@@ -18,7 +18,7 @@ export class LottoTableComponent implements OnInit {
     regularNums = [];
     strongNums = [];
 
-    @ViewChild('lotto-save-modal') modal;
+    @ViewChild('lotto-save-modal') saveModal;
 
     constructor() {}
 

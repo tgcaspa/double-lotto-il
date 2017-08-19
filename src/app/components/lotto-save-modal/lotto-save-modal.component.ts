@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
@@ -7,7 +7,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
     templateUrl: './lotto-save-modal.component.html',
     styleUrls: ['./lotto-save-modal.component.scss']
 })
-export class LottoSaveModalComponent implements OnInit {
+export class LottoSaveModalComponent {
 
     public modalRef: BsModalRef;
     form: FormGroup;
@@ -15,22 +15,21 @@ export class LottoSaveModalComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private modalService: BsModalService) {
         this.form = fb.group({
-            'passport' : [null, Validators.compose([
+            'passport' : ['', Validators.compose([
                 Validators.required,
-                Validators.maxLength(4)
+                Validators.pattern("[0-9]{1,4}")
             ])],
             'phone' : ['', Validators.compose([
                 Validators.required,
-                Validators.pattern(/\d+/)
+                Validators.pattern("[0-9]{1,3}-?[0-9]*")
             ])]
         });
     }
 
-    public openModal(template: TemplateRef<any>) {
+    openModal(template: TemplateRef<any>) {
+        this.form.reset();
         this.modalRef = this.modalService.show(template);
     }
-
-    ngOnInit() {}
 
     saveLottoNumbers() {
 
