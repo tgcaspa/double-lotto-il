@@ -12,6 +12,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ModalModule } from "ngx-bootstrap";
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 import { JoinPipe } from './components/lotto-save-modal/join.pipe';
+import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { MdMenuModule } from "@angular/material";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import 'hammerjs';
 
 @NgModule({
     declarations: [
@@ -20,7 +24,8 @@ import { JoinPipe } from './components/lotto-save-modal/join.pipe';
         MainHeaderComponent,
         ResultsComponent,
         LottoSaveModalComponent,
-        JoinPipe
+        JoinPipe,
+        SidebarComponent
     ],
     imports: [
         BrowserModule,
@@ -29,7 +34,9 @@ import { JoinPipe } from './components/lotto-save-modal/join.pipe';
         ReactiveFormsModule,
         AppRouting,
         ModalModule.forRoot(),
-        AngularFontAwesomeModule
+        AngularFontAwesomeModule,
+        BrowserAnimationsModule,
+        MdMenuModule
     ],
     providers: [],
     bootstrap: [AppComponent]

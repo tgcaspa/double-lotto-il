@@ -1,3 +1,4 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
 
@@ -5,8 +6,6 @@ body{
   background-color: #fefadf;
   direction: rtl !important;
   font-family: 'Assistant', sans-serif;
-  font-size: .8em;
-  font-weight: bold;
 }
 .row{
   line-height: 24px;
