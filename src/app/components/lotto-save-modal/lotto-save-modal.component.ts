@@ -1,15 +1,19 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { JoinPipe } from "./join.pipe";
 
 @Component({
     selector: 'lotto-save-modal',
     templateUrl: './lotto-save-modal.component.html',
-    styleUrls: ['./lotto-save-modal.component.scss']
+    styleUrls: ['./lotto-save-modal.component.scss'],
+    providers: [JoinPipe]
 })
 export class LottoSaveModalComponent {
 
-    public modalRef: BsModalRef;
+    @Input() regularNums: number[];
+    @Input() strongNums: number[];
+    modalRef: BsModalRef;
     form: FormGroup;
 
     constructor(private fb: FormBuilder,
@@ -26,7 +30,15 @@ export class LottoSaveModalComponent {
         });
     }
 
+    isNumbersAreSelected():boolean {
+        return this.regularNums.length === 6 && this.strongNums.length === 1;
+    }
+
     openModal(template: TemplateRef<any>) {
+        if(!this.isNumbersAreSelected()) {
+            alert('לא נבחרו מספרים');
+            return false;
+        }
         this.form.reset();
         this.modalRef = this.modalService.show(template);
     }

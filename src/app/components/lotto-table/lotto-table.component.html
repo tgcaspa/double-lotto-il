@@ -1,27 +1,23 @@
 <img src="../../../assets/images/double-lotto-logo.png"
      class="img-fluid"
      alt="דאבל לוטו">
-<div class="row" dir="ltr">
-    <div class="col-10 regular-nums"></div>
-    <div class="col-2 strong-nums table-title cell-item text-center">
-        <strong>חזק</strong>
-        <fa name="caret-down"></fa>
-    </div>
-</div>
-<!---->
-<div class="row table-wrap" dir="ltr">
-    <!-- regular numbers -->
-    <div class="col-10 table-regular-nums">
+<!-- lotto-table -->
+<div class="row text-center" dir="ltr">
+    <!-- regular-number -->
+    <section class="col regular-nums">
         <div class="row">
-            <div *ngFor="let value of regularNums; let ix = index">
-                <br *ngIf="isNewLine_regular(ix)">
-                <div *ngIf="ix === 0"
-                     style="width:30%"
-                     class="col-3 table-title cell-item text-center">
-                    <fa name="caret-right"></fa>
+            <div class="col"><br></div>
+        </div>
+        <div class="row table-wrap">
+            <div class="col-3 cell-item title">
+                <div>
                     <strong>טבלה 1</strong>
+                    <fa name="caret-right pull-right m-t-5"></fa>
                 </div>
-                <div class="col-1 cell-item">
+            </div>
+            <div *ngFor="let value of regularNums; let ix = index" class="d-inline-block">
+                <div class="br" *ngIf="isNewLine_regular(ix)"></div>
+                <div class="col cell-item mb-0">
                     <span class="title text-center">{{ix+1}}</span>
                     <span class="input text-center"
                           [class.selected]="value === 1"
@@ -29,28 +25,32 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
+    <!-- end regular-numbers -->
     <!-- strong numbers -->
-    <div class="col-2 table-strong-nums">
+    <section class="col-2 strong-nums">
         <div class="row">
-            <div *ngFor="let value of strongNums; let ix = index">
-                <br *ngIf="isNewLine_stong(ix)">
-                <div *ngIf="ix === 0" class="col-6 table-title cell-item text-center">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                </div>
-                <div class="col-6 cell-item">
-                    <span class="title text-center">{{ix+1}}</span>
-                    <span class="input text-center"
-                          [class.selected]="value === 1"
-                          (click)="cellClicked($event, ix, 'strong')">_</span>
-                </div>
+            <div class="col header-title">
+                <fa name="caret-down"></fa>
+                <strong>חזק</strong>
             </div>
         </div>
-    </div>
+        <div class="row table-wrap">
+            <div class="col cell-item title">
+                <fa name="caret-right"></fa>
+            </div>
+            <div class="col cell-item mb-1" *ngFor="let value of strongNums; let ix = index">
+                <span class="title text-center">{{ix+1}}</span>
+                <span class="input text-center"
+                      [class.selected]="value === 1"
+                      (click)="cellClicked($event, ix, 'strong')">_</span>
+            </div>
+        </div>
+    </section>
+    <!-- end strong-numbers -->
 </div>
-<!---->
-<!---->
+<!-- end lotto-table -->
+<!-- controls-wrap -->
 <div class="row controls-wrap mt-30">
     <div class="col-6 text-left">
         <button class="btn btn-outline-primary btn-generate"
@@ -60,15 +60,19 @@
         </button>
     </div>
     <div class="col-6 text-right">
-        <lotto-save-modal #saveModal></lotto-save-modal>
+        <lotto-save-modal #saveModal
+                          [regularNums]="getSelectedKeys(regularNums)"
+                          [strongNums]="getSelectedKeys(strongNums)">
+        </lotto-save-modal>
     </div>
 </div>
-<!---->
+<!-- end controls-wrap -->
+<!-- info -->
 <div class="row mt-30">
     <div class="col text-right">
-        <div class="alert alert-danger" dir="rtl" role="alert">
+        <div class="alert alert-danger font-weight-normal" dir="rtl" role="alert">
             <strong>הערה: </strong> שמירת המספרים תשמש אותך להשוות תוצאות הלוטו אחרונים מול מפעל הפייס.
         </div>
     </div>
 </div>
-<!---->
+<!-- end info -->

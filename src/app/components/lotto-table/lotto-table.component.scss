@@ -1,52 +1,61 @@
 $yellow: #fde882;
 
-.table-regular-nums{
-  background-color: #ffe0e6;
-}
-.table-title{
+.header-title {
   background-color: $yellow;
   color: red;
+  padding: 0;
 }
-.table-wrap {
-  .table-title{
+.cell-item {
+  padding: 0 3px;
+  color: red;
+  height: 22px;
+  display: inline-block;
+  &.title {
     background-color: red;
-    color: white !important;
+    color: white;
     line-height: 22px;
-    span{
+    .fa {
       color: white;
     }
   }
-  .cell-item {
-    min-width:10%;
-    color: red;
-    height: 22px;
-    .title{
-      display: block;
-      line-height: 12px;
-    }
-    .input{
-      cursor: pointer;
-      display: block;
-      border: 1px solid red;
-      border-radius: 7px;
-      line-height: 8px;
-      &.selected{
-        background-color: #848484 !important;
-        color: #848484 !important;
-      }
+  .title {
+    display: block;
+    line-height: 12px;
+  }
+  .input {
+    cursor: pointer;
+    display: block;
+    border: 1px solid red;
+    border-radius: 7px;
+    line-height: 8px;
+    color: inherit;
+    font-weight: normal;
+    width: 25px;
+    &.selected{
+      background-color: #848484 !important;
+      color: #848484 !important;
     }
   }
-  .table-regular-nums {
-    .cell-item .input{
-      background-color: white;
-      color: white;
+}
+section.regular-nums {
+  .table-wrap{
+    background-color: #ffe0e6;
+    border-right: 1px solid red;
+    > .title {
+      flex: 0 1 30%;
+      max-width: 30%;
+    }
+    .d-inline-block {
+      height: 26px;
     }
   }
-  .table-strong-nums {
-    .cell-item .input{
-      background-color: $yellow;
-      color: $yellow;
-    }
+  .cell-item .input{
+    background-color: white;
+  }
+}
+section.strong-nums {
+  .cell-item .input{
+    background-color: $yellow;
   }
 }
 

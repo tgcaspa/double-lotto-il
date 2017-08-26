@@ -1,4 +1,5 @@
 <button class="btn btn-outline-primary btn-save"
+        [disabled]="!isNumbersAreSelected()"
         (click)="openModal(template)">
     <fa name="thumbs-o-up"></fa>
     לך על זה
@@ -6,11 +7,22 @@
 <!-- Modal -->
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title pull-right">שמירת מספרי המזל שלך</h4>
+        <h4 class="modal-title pull-right">
+            <fa name="star-o"></fa>
+            שמירת מספרי המזל שלך
+        </h4>
     </div>
     <div class="modal-body">
         <form [formGroup]="form"
               (ngSubmit)="saveLottoNumbers(form.value)">
+            <div class="form-group text-right">
+                <label for="passport">המספרים שנבחרו</label>
+                <p class="alert alert-dark text-center"
+                   dir="ltr">
+                    {{regularNums|join:', '}}
+                    <strong class="ml-3">{{strongNums|join}}</strong>
+                </p>
+            </div>
             <div class="form-group text-right">
                 <label for="passport">4 ספרות אחרונות של ת"ז</label>
                 <input id="passport"

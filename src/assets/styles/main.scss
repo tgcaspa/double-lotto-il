@@ -1,4 +1,3 @@
-@import 'variables';
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
 
@@ -6,16 +5,17 @@ body{
   background-color: #fefadf;
   direction: rtl !important;
   font-family: 'Assistant', sans-serif;
+  font-size: .8em;
+  font-weight: bold;
 }
 .row{
   line-height: 24px;
 }
-.cell-item{
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
 .mb-5 {
   margin-bottom:5px !important;
+}
+.m-t-5{
+  margin-top:5px !important;
 }
 .mt-15 {
   margin-top:15px !important;
@@ -23,18 +23,10 @@ body{
 .mt-30 {
   margin-top:30px !important;
 }
-.glyphicon{
-  top: 1px;
-  font-size: 10px;
-}
-.bt-dashed-2 {
-  border-top: 2px dashed;
-}
-.bb-dashed-2 {
-  border-bottom: 2px dashed;
-}
 .btn {
   border-radius: 0;
   min-width: 50%;
+  &:not(:disabled) { cursor: pointer; }
+  &:disabled { cursor: not-allowed; }
   &:focus { outline: none; }
 }

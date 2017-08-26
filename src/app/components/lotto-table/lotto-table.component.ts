@@ -15,8 +15,8 @@ export class LottoTableComponent implements OnInit {
     readonly STRONG_MAX_SELECT = 1;
     readonly STRONG_CELLS = 7;
 
-    regularNums = [];
-    strongNums = [];
+    regularNums: number[] = [];
+    strongNums: number[] = [];
 
     @ViewChild('lotto-save-modal') saveModal;
 
@@ -29,11 +29,6 @@ export class LottoTableComponent implements OnInit {
 
     isNewLine_regular(ix) {
         let res = [7, 17, 27].indexOf(ix);
-        return Boolean(res !== -1);
-    }
-
-    isNewLine_stong(ix) {
-        let res = [1,3].indexOf(ix);
         return Boolean(res !== -1);
     }
 
@@ -63,7 +58,7 @@ export class LottoTableComponent implements OnInit {
             collection.push(n);
             this.regularNums[n] = 1;
         }
-        console.log(`regular: ${collection}`);
+        console.log(`regular: ${this.getSelectedKeys(this.regularNums)}`);
     }
 
     private generateStrongNums() {
@@ -76,7 +71,17 @@ export class LottoTableComponent implements OnInit {
             collection.push(n);
             this.strongNums[n] = 1;
         }
-        console.log(`strong: ${collection}`);
+        console.log(`strong: ${this.getSelectedKeys(this.strongNums)}`);
+    }
+
+    getSelectedKeys(numbers: number[]): number[] {
+        let collection = [];
+        for (let ix = 0; ix < numbers.length; ix++) {
+            if(numbers[ix] === 1) {
+                collection.push(ix+1);
+            }
+        }
+        return collection;
     }
 
     cellClicked(e: Event, ix: number, type: string) {
@@ -84,7 +89,7 @@ export class LottoTableComponent implements OnInit {
         const val = Number(!selected);
         switch(type) {
             case 'regular':
-                const countRegular = _.filter(this.regularNums, function(n){ return n === 1});
+                const countRegular = this.getSelectedKeys(this.regularNums);
                 if(val && countRegular.length >= this.REGULAR_MAX_SELECT) {
                     alert(`אפשר לבחור לא יותר משישה מספרים רגילים.`);
                     return;
@@ -92,7 +97,7 @@ export class LottoTableComponent implements OnInit {
                 this.regularNums[ix] = val;
                 break;
             case 'strong':
-                const countStrong = _.filter(this.strongNums, function(n){ return n === 1});
+                const countStrong = this.getSelectedKeys(this.strongNums);
                 if(val && countStrong.length >= this.STRONG_MAX_SELECT) {
                     alert(`אפשר לבחור לא יותר ממספר אחד חזק.`);
                     return;

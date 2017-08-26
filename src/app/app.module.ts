@@ -11,6 +11,7 @@ import { LottoSaveModalComponent } from './components/lotto-save-modal/lotto-sav
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ModalModule } from "ngx-bootstrap";
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
+import { JoinPipe } from './components/lotto-save-modal/join.pipe';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awes
         LottoTableComponent,
         MainHeaderComponent,
         ResultsComponent,
-        LottoSaveModalComponent
+        LottoSaveModalComponent,
+        JoinPipe
     ],
     imports: [
         BrowserModule,
