@@ -6,7 +6,7 @@ $yellow: #fde882;
   padding: 0;
 }
 .cell-item {
-  padding: 0 3px;
+  padding: 0 .3em;
   color: red;
   height: 22px;
   display: inline-block;
@@ -28,9 +28,9 @@ $yellow: #fde882;
     border: 1px solid red;
     border-radius: 7px;
     line-height: 8px;
-    color: inherit;
+    color: transparent;
     font-weight: normal;
-    width: 25px;
+    width: 6.4vw;
     &.selected{
       background-color: #848484 !important;
       color: #848484 !important;
