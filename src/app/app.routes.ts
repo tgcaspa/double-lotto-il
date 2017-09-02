@@ -9,11 +9,11 @@ import { LottoTableComponent } from "./components/lotto-table/lotto-table.compon
 import { ResultsComponent } from "./components/results/results.component";
 
 export const ROUTES: Routes = [
-    { path: '', component: LottoTableComponent },
+    { path: 'table', component: LottoTableComponent },
     { path: 'results', component: ResultsComponent },
     {
         path: '',
-        redirectTo: '/',
+        redirectTo: 'table',
         pathMatch: 'full'
     }
 ];

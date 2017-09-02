@@ -1,0 +1,16 @@
+button {
+  margin-top: 7px;
+  margin-right: 7px;
+}
+
+ul.navbar-nav {
+  border-top: 1px solid #c7c7c7;
+  li.active {
+    background-color: pink;
+  }
+}
+fa {
+  &[name="bars"] {
+    font-size: 24px;
+  }
+}

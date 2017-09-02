@@ -1,18 +1,15 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
-import { JoinPipe } from "../../pipes/join.pipe";
 
 @Component({
-    selector: 'lotto-save-modal',
-    templateUrl: './lotto-save-modal.component.html',
-    styleUrls: ['./lotto-save-modal.component.scss'],
-    providers: [JoinPipe]
+  selector: 'app-compare-modal',
+  templateUrl: './compare-modal.component.html',
+  styleUrls: ['./compare-modal.component.scss']
 })
-export class LottoSaveModalComponent {
+export class CompareModalComponent {
 
-    @Input() regularNums: number[];
-    @Input() strongNums: number[];
+    @Output() onCompare = new EventEmitter();
     modalRef: BsModalRef;
     form: FormGroup;
 
@@ -30,20 +27,20 @@ export class LottoSaveModalComponent {
         });
     }
 
-    isNumbersAreSelected():boolean {
-        return this.regularNums.length === 6 && this.strongNums.length === 1;
-    }
-
     openModal(template: TemplateRef<any>) {
-        if(!this.isNumbersAreSelected()) {
-            alert('לא נבחרו מספרים');
-            return false;
-        }
         this.form.reset();
         this.modalRef = this.modalService.show(template);
     }
 
-    saveLottoNumbers() {
+    compareUserResults() {
+        debugger;
 
+        if(this.form.valid) {
+            this.onCompare.next();
+            if(this.modalRef) {
+                this.modalRef.hide();
+            }
+        }
     }
+
 }

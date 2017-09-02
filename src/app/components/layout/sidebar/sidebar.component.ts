@@ -1,15 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+    selector: 'layout-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class LayoutSidebarComponent implements OnInit {
 
-  constructor() { }
+    isCollapsed:boolean = true;
 
-  ngOnInit() {
-  }
+    constructor(private router: Router) {
+        router.events.subscribe((val) => {
+            if (val instanceof NavigationEnd) {
+                this.isCollapsed = true;
+            }
+        });
+    }
+
+    ngOnInit() {
+    }
 
 }

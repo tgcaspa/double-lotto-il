@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayoutMainHeaderComponent } from './main-header.component';
+import { CompareModalComponent } from './compare-modal.component';
 
-describe('LayoutMainHeaderComponent', () => {
-  let component: LayoutMainHeaderComponent;
-  let fixture: ComponentFixture<LayoutMainHeaderComponent>;
+describe('CompareModalComponent', () => {
+  let component: CompareModalComponent;
+  let fixture: ComponentFixture<CompareModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutMainHeaderComponent ]
+      declarations: [ CompareModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LayoutMainHeaderComponent);
+    fixture = TestBed.createComponent(CompareModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

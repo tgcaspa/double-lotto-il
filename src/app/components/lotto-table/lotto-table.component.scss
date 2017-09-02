@@ -1,63 +1,64 @@
-$yellow: #fde882;
+@import "../../../assets/styles/colors";
 
-.header-title {
-  background-color: $yellow;
-  color: red;
-  padding: 0;
-}
-.cell-item {
-  padding: 0 .3em;
-  color: red;
-  height: 22px;
-  display: inline-block;
+.numbers-wrap {
   font-size: .8em;
-  font-weight: bold;
-  &.title {
-    background-color: red;
-    color: white;
-    line-height: 22px;
-    .fa {
-      color: white;
-    }
-  }
-  .title {
-    display: block;
-    line-height: 12px;
-  }
-  .input {
-    cursor: pointer;
-    display: block;
-    border: 1px solid red;
-    border-radius: 7px;
-    line-height: 8px;
-    color: transparent;
-    font-weight: normal;
-    width: 6.4vw;
-    &.selected{
-      background-color: #848484 !important;
-      color: #848484 !important;
-    }
-  }
-}
-section.regular-nums {
-  .table-wrap{
-    background-color: #ffe0e6;
-    border-right: 1px solid red;
-    > .title {
-      flex: 0 1 30%;
-      max-width: 30%;
-    }
-    .d-inline-block {
-      height: 26px;
-    }
-  }
-  .cell-item .input{
-    background-color: white;
-  }
-}
-section.strong-nums {
-  .cell-item .input{
+  color: $red;
+  .header-title {
     background-color: $yellow;
+    padding: 0;
+  }
+  .cell-item {
+    padding: 0 .3em;
+    height: 22px;
+    display: inline-block;
+    font-weight: bold;
+    &.title {
+      background-color: $red;
+      color: white;
+      line-height: 22px;
+      .fa {
+        color: white;
+      }
+    }
+    .title {
+      display: block;
+      line-height: 12px;
+    }
+    .input {
+      cursor: pointer;
+      display: block;
+      border: 1px solid $red;
+      border-radius: 7px;
+      line-height: 8px;
+      color: transparent;
+      font-weight: normal;
+      width: 6.4vw;
+      &.selected{
+        background-color: #848484 !important;
+        color: #848484 !important;
+      }
+    }
+  }
+  section.regular-nums {
+    .table-wrap{
+      background-color: #ffe0e6;
+      border-right: 1px solid $red;
+      > .title {
+        flex: 0 1 30%;
+        max-width: 30%;
+      }
+      .d-inline-block {
+        height: 26px;
+      }
+    }
+    .cell-item .input{
+      background-color: white;
+    }
+  }
+  section.strong-nums {
+    .cell-item .input{
+      background-color: $yellow;
+    }
   }
 }
 

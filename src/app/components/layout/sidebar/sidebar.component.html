@@ -1,3 +1,25 @@
-<p>
-  sidebar works!
-</p>
+<button type="button"
+        class="float-right border-0 bg-transparent"
+        (click)="isCollapsed = !isCollapsed">
+    <fa name="bars" class="text-dark"></fa>
+</button>
+
+<div class="collapse navbar-collapse"
+     [collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto p-0 text-right">
+        <li class="nav-item"
+            routerLinkActive="active">
+            <a routerLink="table" class="nav-link text-dark pr-3" translate>
+                <fa name="star-o" class="ml-2"></fa>
+                Lottery Numbers
+            </a>
+        </li>
+        <li class="nav-item"
+            routerLinkActive="active">
+            <a routerLink="results" class="nav-link text-dark pr-3" translate>
+                <fa name="file-text-o" class="ml-2"></fa>
+                Results
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,6 +1,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
+@import "colors";
 
 body{
   background-color: #fefadf;
@@ -28,4 +29,10 @@ body{
   &:not(:disabled) { cursor: pointer; }
   &:disabled { cursor: not-allowed; }
   &:focus { outline: none; }
+}
+.bt-dashed-2 {
+  border-top: 2px dashed;
+}
+.bb-dashed-2 {
+  border-bottom: 2px dashed;
 }
