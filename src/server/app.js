@@ -13,6 +13,8 @@ var app        = express();
 var dbConfig    = require('../../app/config/db');
 var appMetadata = require('../../app/config/app.metadata');
 
+console.log(dbConfig.getConnection());
+return;
 app.set('port', appMetadata.port);
 
 app.use(bodyParser.json());
@@ -25,7 +27,7 @@ mongoose.connect(dbConfig.getConnection(), { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 // Models
-var Response = require('./models/response.js');
+var Response = require('./models/response');
 var Results  = require('./models/mongoose/results');
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -80,7 +82,7 @@ db.once('open', function() {
         })
     });
 
-    //
+    // find Pais results by id
     app.get('/api/results/pais/:id', function(req, res){
         const id = Number(req.params.id) || 0;
         if(id <= 0) {

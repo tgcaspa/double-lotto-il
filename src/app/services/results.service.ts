@@ -1,25 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Http } from "@angular/http";
+import { Http, Response } from "@angular/http";
+import { ConfigServerUrlsService } from "../../../app/config/server-urls.service";
+import { ResultModel } from "../models/result";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ResultsService {
 
+    constructor(private http: Http,
+                private serverSvc: ConfigServerUrlsService) {}
 
-    constructor(private http: Http) {}
-
-    getLastResultsFromPais() {
-        const url = '/api/results/pais/last';
-
-
+    getLastResultsFromPais(): Observable<ResultModel> {
+        const url = `${this.serverSvc.apiURL}/api/results/pais/last`;
+        return this.http.get(url)
+            .map((res: Response) => res.json())
+            .catch((err: Response) => Observable.throw(err))
     }
 
-    getResultsByIdFromPais(id: number) {
-        const url = '/api/results/pais/:id';
-
+    getResultsByIdFromPais(obj: ResultModel): Observable<ResultModel> {
+        const url = `${this.serverSvc.apiURL}/api/results/pais/${obj.lottery_id}`;
+        return this.http.get(url)
+            .map((res: Response) => res.json())
+            .catch((err: Response) => Observable.throw(err))
     }
 
-    getResultsByPassportAndPhone(params: object) {
-
+    getUserResults(obj: ResultModel): Observable<ResultModel[]> {
+        const url = `${this.serverSvc.apiURL}/api/results/${obj.lottery_id}`;
+        return this.http.post(url, JSON.stringify(obj))
+            .map((res: Response) => res.json())
+            .catch((err: Response) => Observable.throw(err))
     }
 
 }

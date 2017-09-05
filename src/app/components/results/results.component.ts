@@ -19,7 +19,10 @@ export class ResultsComponent implements OnInit {
 
     ngOnInit() {
         this.userResultsVisible = false;
-        // this.paisResults = null;
+        this.initPaisResults();
+    }
+
+    initPaisResults() {
         this.paisResults = new ResultModel();
         this.paisResults.lottery_id = 2932;
         this.paisResults.regular = [1, 3, 15, 26, 29, 36];
@@ -29,6 +32,7 @@ export class ResultsComponent implements OnInit {
 
     showUserResults($event: Event) {
         debugger;
+        // TODO: get user's results by password & phone
         this.userResultsVisible = true;
     }
 }
