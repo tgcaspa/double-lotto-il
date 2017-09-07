@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
@@ -33,8 +33,6 @@ export class CompareModalComponent {
     }
 
     compareUserResults() {
-        debugger;
-
         if(this.form.valid) {
             this.onCompare.next();
             if(this.modalRef) {

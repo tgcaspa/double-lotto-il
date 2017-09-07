@@ -1,4 +1,5 @@
-<button class="btn btn-outline-primary btn-save"
+<button md-raised-button
+        class="btn btn-outline-primary btn-save"
         [disabled]="!isNumbersAreSelected()"
         (click)="openModal(template)">
     <fa name="thumbs-o-up"></fa>
@@ -43,6 +44,14 @@
                 <small [hidden]="form.get('phone').pristine || !form.get('phone').errors"
                        class="text-danger">שדה אינו תקין</small>
             </div>
+            <!-- info -->
+            <div class="form-group text-right">
+                <alert type="success" class="font-weight-normal" dir="rtl">
+                    <strong>{{'Note'|translate}}: </strong>
+                    <span translate>Storing the numbers will be used to compare the latest lottery results against the Miphal Ha-Pais</span>.
+                </alert>
+            </div>
+            <!-- end info -->
         </form>
     </div>
     <div class="modal-footer">

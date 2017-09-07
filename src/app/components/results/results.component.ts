@@ -11,7 +11,7 @@ import { JoinPipe } from "../../pipes/join.pipe";
 })
 export class ResultsComponent implements OnInit {
 
-    paisResults: ResultModel;
+    paisLastResult: ResultModel;
     userResultsVisible: boolean;
 
     constructor(private resultsSvc: ResultsService) {
@@ -23,11 +23,12 @@ export class ResultsComponent implements OnInit {
     }
 
     initPaisResults() {
-        this.paisResults = new ResultModel();
-        this.paisResults.lottery_id = 2932;
-        this.paisResults.regular = [1, 3, 15, 26, 29, 36];
-        this.paisResults.strong = [5];
-        this.paisResults.timestamp = 1504047300000;
+        // last Pais results
+        this.resultsSvc
+            .paisLastResult
+            .subscribe((result: ResultModel) => {
+                this.paisLastResult = result;
+            });
     }
 
     showUserResults($event: Event) {

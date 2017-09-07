@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ResultModel } from "../../models/result";
+import { ResultsService } from "../../services/results.service";
 
 declare let $:any;
 declare let _:any;
@@ -17,12 +19,20 @@ export class LottoTableComponent implements OnInit {
 
     regularNums: number[] = [];
     strongNums: number[] = [];
+    paisLastResult: ResultModel;
 
     @ViewChild('lotto-save-modal') saveModal;
 
-    constructor() {}
+    constructor(private resultsSvc: ResultsService) {}
 
     ngOnInit() {
+        // last Pais results
+        this.resultsSvc
+            .paisLastResult
+            .subscribe((result: ResultModel) => {
+                this.paisLastResult = result;
+            });
+
         this.initRegularNums();
         this.initStrongNums();
     }

@@ -2,7 +2,7 @@
  * Created by ghost-dev on 1/27/2017.
  */
 
-var _modelSuccess = {
+let _modelSuccess = {
     "success": {
         "status": 200
     },
@@ -10,7 +10,7 @@ var _modelSuccess = {
     "message": "Response message"
 };
 
-var _modelError = {
+let _modelError = {
     "error": {
         "status": 400,
         "message": "Bad request - error message"
@@ -36,14 +36,14 @@ Response.prototype.detectType = function (error) {
 }
 
 Response.prototype.success = function (data, message) {
-    var r = _modelSuccess;
+    let r = _modelSuccess;
     r.data = data || [];
     r.message = message || "Response message";
     return r;
 }
 
 Response.prototype.error = function (data, message) {
-    var r = _modelError;
+    let r = _modelError;
     r.error = data || [];
     r.message = message || "Response message";
     return r;

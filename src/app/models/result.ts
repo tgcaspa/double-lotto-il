@@ -1,23 +1,38 @@
 declare let _: any;
 
-export class ResultModel {
+export class ResultModel implements IResult {
     lottery_id: number;
     timestamp: number;
     regular: number[];
     strong: number[];
     pais: boolean;
-    passport: number;
-    phone: string;
 
     constructor(attr?: object) {
         attr = _.assign({}, attr);
 
         this.lottery_id = attr['lottery_id'] || 0;
         this.timestamp = attr['timestamp'] || 0;
-        this.regular = attr['regular'] ? attr['regular'].split(',') : [];
-        this.strong = attr['strong'] ? attr['strong'].split(',') : [];
+        this.setRegular(attr['regular']);
+        this.setStrong(attr['strong']);
         this.pais = attr['pais'] == '1';
-        this.passport = attr['passport'] || 0;
-        this.phone = attr['phone'] || "";
     }
+
+    setRegular(value) {
+        if(_.isString(value)) {
+            value = value.split(',');
+        } else if(!_.isArray(value)) {
+            value = [];
+        }
+        this.regular = value;
+    }
+
+    setStrong(value) {
+        if(_.isString(value)) {
+            value = value.split(',');
+        } else if(!_.isArray(value)) {
+            value = [];
+        }
+        this.strong = value;
+    }
+
 }

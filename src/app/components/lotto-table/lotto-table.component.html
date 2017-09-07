@@ -3,8 +3,13 @@
          class="img-fluid"
          alt="דאבל לוטו">
 </div>
+
+<ng-template #contentLoading>
+    <md-progress-bar mode="indeterminate" class="mt-3"></md-progress-bar>
+</ng-template>
 <!-- lotto-table -->
-<div class="row text-center numbers-wrap" dir="ltr">
+<div *ngIf="paisLastResult; else contentLoading"
+     class="row text-center numbers-wrap" dir="ltr">
     <!-- regular-number -->
     <section class="col regular-nums">
         <div class="row">
@@ -69,13 +74,3 @@
     </div>
 </div>
 <!-- end controls-wrap -->
-<!-- info -->
-<div class="row mt-30">
-    <div class="col text-right">
-        <alert type="success" class="font-weight-normal" dir="rtl">
-            <strong>{{'Note'|translate}}: </strong>
-            <span translate>Storing the numbers will be used to compare the latest lottery results against the Miphal Ha-Pais</span>.
-        </alert>
-    </div>
-</div>
-<!-- end info -->

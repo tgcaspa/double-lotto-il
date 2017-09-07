@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
+import { ResultsService } from "./services/results.service";
+import { ResultModel } from "./models/result";
 
 @Component({
     selector: 'app-lotto',
@@ -8,11 +10,27 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class AppComponent {
 
-    constructor(translate: TranslateService) {
-        // this language will be used as a fallback when a translation isn't found in the current language
-        // translate.setDefaultLang('he');
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
+    readonly PLR_KEY = 'PAIS_LAST_RESULT';
+
+    constructor(translate: TranslateService,
+                private resultsSvc: ResultsService) {
+        // application language
         translate.use('he');
+        // last Pais results
+        const paisResult = sessionStorage.getItem(this.PLR_KEY);
+        if(!paisResult) {
+            resultsSvc
+                .getLastResultsFromPais()
+                .subscribe(
+                    (result: ResultModel) => {
+                        sessionStorage.setItem(this.PLR_KEY, JSON.stringify(result));
+                        this.resultsSvc.pushPaisLastResult$(result);
+                    },
+                    (error: Response) => { alert(error.json()); }
+                );
+        } else {
+            this.resultsSvc.pushPaisLastResult$(paisResult);
+        }
     }
 
 }

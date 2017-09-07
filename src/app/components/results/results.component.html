@@ -2,7 +2,7 @@
     <md-progress-bar mode="indeterminate"></md-progress-bar>
 </ng-template>
 <!-- result-page -->
-<div *ngIf="paisResults; else contentLoading">
+<div *ngIf="paisLastResult; else contentLoading">
     <div class="row">
         <div class="col text-center">
             <div class="main-header bt-dashed-2 bb-dashed-2">
@@ -14,8 +14,8 @@
     <div class="row pais-results-wrap mt-3">
         <div class="col-12">
             <alert type="success" class="font-weight-normal text-center">
-                <p class="font-weight-bold mb-0">{{'Lottery Results No.'|translate}} {{paisResults?.lottery_id}}</p>
-                <small>{{'Date'|translate}} {{paisResults?.timestamp|date}}</small>
+                <p class="font-weight-bold mb-0">{{'Lottery Results No.'|translate}} {{paisLastResult?.lottery_id}}</p>
+                <small>{{'Date'|translate}} {{paisLastResult?.timestamp|date:'hh:mm MM/dd/y'}}</small>
             </alert>
         </div>
         <div class="col-12 mt-0">
@@ -23,8 +23,8 @@
                 <p class="mb-0"
                    dir="ltr">
                     <small class="pull-right" translate>Pais Numbers</small>
-                    {{paisResults?.regular|join:' - '}}
-                    <strong class="ml-3">{{paisResults?.strong|join}}</strong>
+                    {{paisLastResult?.regular|join:' - '}}
+                    <strong class="ml-3">{{paisLastResult?.strong|join}}</strong>
                 </p>
             </alert>
         </div>
@@ -40,10 +40,10 @@
     </div>
     <!-- end controls-wrap -->
     <!-- user-results -->
-    <div *ngIf="!userResultsVisible" class="row mt-4">
+    <div *ngIf="userResultsVisible" class="row mt-4">
         <div class="col">
             <div class="container">
-                <app-user-results [paisResults]="paisResults"></app-user-results>
+                <app-user-results [paisResults]="paisLastResult"></app-user-results>
             </div>
         </div>
     </div>

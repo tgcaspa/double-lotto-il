@@ -2,39 +2,41 @@
  * Created by ghost-dev on 8/5/2017.
  */
 
-var path       = require('path');
-var morgan     = require('morgan');
-var bodyParser = require('body-parser');
-var request    = require('request');
-var cheerio    = require('cheerio');
-var express    = require('express');
-var app        = express();
+let _           = require('underscore');
+let path        = require('path');
+let morgan      = require('morgan');
+let mongoose    = require('mongoose');
+let stitch      = require("mongodb-stitch");
+let bodyParser  = require('body-parser');
+let request     = require('request');
+let cheerio     = require('cheerio');
+let express     = require('express');
+let app         = express();
+let dbConfig    = require('../../app/config/db');
+let appMetadata = require('../../app/config/app.metadata');
 
-var dbConfig    = require('../../app/config/db');
-var appMetadata = require('../../app/config/app.metadata');
-
-console.log(dbConfig.getConnection());
-return;
+// App configuration
 app.set('port', appMetadata.port);
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(morgan('dev'));
-
-var mongoose = require('mongoose');
-var db = mongoose.connection;
+// DB connection
+let db = mongoose.connection;
 mongoose.connect(dbConfig.getConnection(), { useMongoClient: true });
 mongoose.Promise = global.Promise;
-
+let client = new stitch.StitchClient('lotto-kxlvg');
+let db_lotto = client.service('mongodb', 'mongodb-atlas').db('lotto');
 // Models
-var Response = require('./models/response');
-var Results  = require('./models/mongoose/results');
+let Response = require('./models/response');
+let Results  = require('./models/mongoose/results');
+let Users  = require('./models/mongoose/users');
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.once('open', () => {
     console.log('App Lotto has been connected to MongoDB');
 
-    app.use(function(req, res, next) {
+    // CORS
+    app.use((req, res, next) => {
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -42,35 +44,35 @@ db.once('open', function() {
     });
 
     // find last Pais results
-    app.get('/api/results/pais/last', function(req, res) {
-        url = 'http://www.pais.co.il/Lotto/Pages/last_Results.aspx';
+    app.get('/api/results/pais/last', (req, res) => {
+        let url = 'http://www.pais.co.il/Lotto/Pages/last_Results.aspx';
 
         request(url, function(error, response, html){
-            var json = { id: 0, timestamp: 0, strong: 0, regular: 0};
+            let json = {lottery_id: 0, timestamp: 0, strong: 0, regular: 0, pais: true};
             if(error) {
                 res.status(400).json(
                     Response.pack(error, json, "Lotto Results")
                 );
             }
 
-            var $ = cheerio.load(html);
+            let $ = cheerio.load(html);
 
             $('#PaisLottoLastResults').filter(function(){
-                var data = $(this);
-                var strong = data.find('.StrongNumber').text() || 0;
-                var regular = [];
+                let data = $(this);
+                let strong = data.find('.StrongNumber').text() || 0;
+                let regular = [];
                 data.find('ul>li.Number').map(function(ix, item) {
                     regular.push($(item).text());
                 });
                 regular = regular.join(',');
-                var paisFirst = data.children('.PaisFirst').text().trim();
-                var id = paisFirst.match(/\d{4}/)[0] || 0;
-                var dateTime = [
+                let paisFirst = data.children('.PaisFirst').text().trim();
+                let id = paisFirst.match(/\d{4}/)[0] || 0;
+                let dateTime = [
                     paisFirst.match(/\d{2}\/\d{2}\/\d{4}/)[0],
                     paisFirst.match(/\d{2}:\d{2}/)[0]
                 ].join(' ');
 
-                json.id = Number(id);
+                json.lottery_id = Number(id);
                 json.timestamp = Date.parse(dateTime);
                 json.strong = strong;
                 json.regular = regular;
@@ -83,7 +85,7 @@ db.once('open', function() {
     });
 
     // find Pais results by id
-    app.get('/api/results/pais/:id', function(req, res){
+    app.get('/api/results/pais/:id', (req, res) => {
         const id = Number(req.params.id) || 0;
         if(id <= 0) {
             const response = Response.pack("Invalid lottery id was specified", data, "Pais results");
@@ -93,25 +95,86 @@ db.once('open', function() {
     });
 
     // find by id
-    app.get('/api/results/:id', function(req, res) {
-        Results.findOne({_id: req.params.id}, function(err, data) {
-            const id = Number(req.params.id) || 0;
-            if(id <= 0) {
-                const response = Response.pack("Invalid lottery id was specified", data, "Lotto results");
-                res.status(400).json(response);
-            }
+    app.get('/api/results/:id', (req, res) => {
+        const id = Number(req.params.id) || 0;
+        if(id <= 0) {
+            const response = Response.pack("Invalid lottery id was specified", data, "Lotto results");
+            res.status(400).json(response);
+        }
+        Results.findOne({
+            passport: req.params.passport || 0,
+            phone: req.params.phone || "",
+        }, (err, data) => {
             const response = Response.pack(err, data, "Lotto results");
             res.status(200).json(response);
+        });
+    });
+
+    // save user's lottery results
+    app.post('/api/results/:id/save', function(req, res) {
+        const id = Number(req.params.id) || 0;
+        if(id <= 0) {
+            const response1 = Response.pack("Invalid lottery id was specified", data, "Save Results");
+            res.status(400).json(response1);
+        }
+        // upsert user's details
+        let uparams = { passport: req.body.passport, phone: req.body.phone };
+        Users.findOneAndUpdate(uparams, {$set: uparams}, {upsert: true, new: true}, (err, data) => {
+            if(err) {
+                const response2 = Response.pack(err, data, "Save Results");
+                res.status(400).send(response2);
+            } else {
+                // save results
+                req.body.lottery_id = id;
+                req.body.user_id = data._id;
+                req.body.timestamp = Date.now();
+                req.body.pais = false;
+                let results = new Results(req.body);
+                results.save((err, data) => {
+                    const lotto_id = !err && data._id || null;
+                    const response3 = Response.pack(err, lotto_id, "Save Results");
+                    res.status(201).send(response3);
+                });
+            }
         })
     });
 
+    // insert user's lottery data
+    app.post('/api/results/:id', function(req, res) {
+        const id = Number(req.params.id) || 0;
+        if(id <= 0) {
+            const response1 = Response.pack("Invalid lottery id was specified", data, "Save Results");
+            res.status(400).json(response1);
+        }
+
+        Users.aggregate([
+            {
+                $project: {
+                    strong: 1,
+                    regular: 1
+                }
+            },
+            {
+                $lookup: {
+                    from: 'results',
+                    localField: 'user_id',
+                    foreignField: 'id',
+                    as: 'results'
+                }
+            }
+        ], (err, data) => {
+            const response = Response.pack(err, data, "Lotto Results");
+            res.status(400).json(response);
+        });
+    });
+
     // all other routes are handled by Angular
-    app.get('/*', function(req, res) {
-        res.sendFile(path.join(__dirname,'/../index.html'));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname,'/../../dist/index.html'));
     });
 
     /** Listen to application port */
-    app.listen(app.get('port'), function() {
+    app.listen(app.get('port'), () => {
         console.log('App Lotto listening on port '+app.get('port'));
     });
 });
