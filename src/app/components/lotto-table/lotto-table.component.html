@@ -59,6 +59,11 @@
 <!-- end lotto-table -->
 <!-- controls-wrap -->
 <div class="row controls-wrap mt-30">
+    <div class="col alert-wrap" *ngIf="pageMessage">
+        <alert type="success" class="font-weight-normal" dir="rtl">
+            <span translate>{{pageMessage}}</span>.
+        </alert>
+    </div>
     <div class="col-6 text-left">
         <button class="btn btn-outline-primary btn-generate"
                 (click)="generateNumbers()">
@@ -67,10 +72,13 @@
         </button>
     </div>
     <div class="col-6 text-right">
-        <lotto-save-modal #saveModal
-                          [regularNums]="getSelectedKeys(regularNums)"
-                          [strongNums]="getSelectedKeys(strongNums)">
-        </lotto-save-modal>
+        <button md-raised-button
+        class="btn btn-outline-primary btn-save"
+        [disabled]="!isNumbersAreSelected()"
+        (click)="openDialog()"
+        translate>
+            <fa name="thumbs-o-up"></fa>Go For It
+        </button>
     </div>
 </div>
 <!-- end controls-wrap -->

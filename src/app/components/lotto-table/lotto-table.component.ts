@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ResultModel } from "../../models/result";
 import { ResultsService } from "../../services/results.service";
+import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
+import { MdDialog } from "@angular/material";
 
 declare let $:any;
 declare let _:any;
@@ -20,19 +22,19 @@ export class LottoTableComponent implements OnInit {
     regularNums: number[] = [];
     strongNums: number[] = [];
     paisLastResult: ResultModel;
+    pageMessage: string;
 
-    @ViewChild('lotto-save-modal') saveModal;
-
-    constructor(private resultsSvc: ResultsService) {}
+    constructor(private resultsSvc: ResultsService,
+                public dialog: MdDialog) {}
 
     ngOnInit() {
-        // last Pais results
+        // last Pais result
         this.resultsSvc
             .paisLastResult
             .subscribe((result: ResultModel) => {
                 this.paisLastResult = result;
             });
-
+        //
         this.initRegularNums();
         this.initStrongNums();
     }
@@ -43,11 +45,11 @@ export class LottoTableComponent implements OnInit {
     }
 
     initRegularNums() {
-        this.regularNums = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.regularNums = new Array(this.REGULAR_CELLS).fill(0);
     }
 
     initStrongNums() {
-        this.strongNums = [0, 0, 0, 0, 0, 0, 0];
+        this.strongNums = new Array(this.STRONG_CELLS).fill(0);
     }
 
     generateNumbers() {
@@ -115,6 +117,31 @@ export class LottoTableComponent implements OnInit {
                 this.strongNums[ix] = val;
                 break;
         }
+    }
+
+    isNumbersAreSelected():boolean {
+        // TODO: getSelectedKeys(regularNums)
+        //       getSelectedKeys(strongNums)
+        // return this.regularNums.length === 6 && this.strongNums.length === 1;
+        return true;
+    }
+
+    openDialog(): void {
+        let dialogRef = this.dialog.open(SaveDialogComponent, {
+            data: {
+                regularNums: this.getSelectedKeys(this.regularNums),
+                strongNums: this.getSelectedKeys(this.strongNums),
+                paisLaResult: this.paisLastResult
+            },
+            direction: "rtl"
+        });
+
+        dialogRef.afterClosed().subscribe((result: any) => {
+            if(result === true) {
+                alert("המספרים נשמרו בהצלחה!");
+                // this.pageMessage = "Saved";
+            }
+        });
     }
 
 }

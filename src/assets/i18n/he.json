@@ -2,6 +2,7 @@
   "Lottery Numbers": "הגרלת מספרים",
   "Results": "תוצאות",
   "Lotto Logo": "לוטו לוגו",
+  "Lotto": "לוטו",
   "Double Lotto": "דאבל לוטו",
   "Note": "הערה",
   "Storing the numbers will be used to compare the latest lottery results against the Miphal Ha-Pais" :"שמירת המספרים תשמש אותך להשוות תוצאות הלוטו אחרונים מול מפעל הפייס",
@@ -15,5 +16,8 @@
   "Invalid field": "שדה אינו תקין",
   "Last 4 digits of passport ID": "4 ספרות אחרונות של ת\"ז",
   "Compare With Your Numbers": "השווה עם המספרים שלך",
-  "Pais Numbers": "מספרי פייס"
+  "Pais Numbers": "מספרי פייס",
+  "No results found": "תוצאות אינן נצאו",
+  "Save Your Lucky Numbers": "שמירת מספרי המזל שלך",
+  "Go For It": "לך על זה"
 }

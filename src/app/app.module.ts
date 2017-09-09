@@ -8,22 +8,22 @@ import { AppComponent } from './app.component';
 import { LottoTableComponent } from './components/lotto-table/lotto-table.component';
 import { LayoutMainHeaderComponent } from './components/layout/header/main-header/main-header.component';
 import { ResultsComponent } from './components/results/results.component';
-import { LottoSaveModalComponent } from './components/lotto-save-modal/lotto-save-modal.component';
+import { SaveDialogComponent } from './components/lotto-table/save-dialog/save-dialog.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AlertModule, CollapseModule, ModalModule } from "ngx-bootstrap";
+import { AlertModule, BsDatepickerModule, CollapseModule, ModalModule } from "ngx-bootstrap";
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 import { LayoutSidebarComponent } from './components/layout/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { MdProgressBarModule } from "@angular/material";
+import { MdDialogModule, MdProgressBarModule } from "@angular/material";
 import { ResultsService } from "./services/results.service";
 import { HttpModule } from "@angular/http";
-import { CompareModalComponent } from './components/results/compare-modal/compare-modal.component';
 import { JoinPipe } from "./pipes/join.pipe";
 import { UserResultsComponent } from './components/results/user-results/user-results.component';
-import { ConfigServerUrlsService } from "../../app/config/server-urls.service";
+import { ConfigServerUrlsService } from "../../config/server-urls.service";
+import { CompareDialogComponent } from './components/results/compare-dialog/compare-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -36,10 +36,14 @@ export function createTranslateLoader(http: HttpClient) {
         LayoutMainHeaderComponent,
         LayoutSidebarComponent,
         ResultsComponent,
-        LottoSaveModalComponent,
+        SaveDialogComponent,
         JoinPipe,
-        CompareModalComponent,
-        UserResultsComponent
+        UserResultsComponent,
+        CompareDialogComponent
+    ],
+    entryComponents: [
+        SaveDialogComponent,
+        CompareDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -51,10 +55,12 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserAnimationsModule,
         AngularFontAwesomeModule,
         MdProgressBarModule,
+        MdDialogModule,
         AppRouting,
         AlertModule.forRoot(),
         ModalModule.forRoot(),
         CollapseModule.forRoot(),
+        BsDatepickerModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

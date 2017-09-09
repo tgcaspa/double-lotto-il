@@ -6,14 +6,14 @@ let _           = require('underscore');
 let path        = require('path');
 let morgan      = require('morgan');
 let mongoose    = require('mongoose');
-let stitch      = require("mongodb-stitch");
+// let stitch      = require("mongodb-stitch");
 let bodyParser  = require('body-parser');
 let request     = require('request');
 let cheerio     = require('cheerio');
 let express     = require('express');
 let app         = express();
-let dbConfig    = require('../../app/config/db');
-let appMetadata = require('../../app/config/app.metadata');
+let dbConfig    = require('../../config/db');
+let appMetadata = require('../../config/app.metadata');
 
 // App configuration
 app.set('port', appMetadata.port);
@@ -24,8 +24,8 @@ app.use(morgan('dev'));
 let db = mongoose.connection;
 mongoose.connect(dbConfig.getConnection(), { useMongoClient: true });
 mongoose.Promise = global.Promise;
-let client = new stitch.StitchClient('lotto-kxlvg');
-let db_lotto = client.service('mongodb', 'mongodb-atlas').db('lotto');
+// let client = new stitch.StitchClient('lotto-kxlvg');
+// let db_lotto = client.service('mongodb', 'mongodb-atlas').db('lotto');
 // Models
 let Response = require('./models/response');
 let Results  = require('./models/mongoose/results');
@@ -91,7 +91,7 @@ db.once('open', () => {
             const response = Response.pack("Invalid lottery id was specified", data, "Pais results");
             res.status(400).json(response);
         }
-        url = 'http://www.pais.co.il/Lotto/Pages/last_Results.aspx?Lottery='+id;
+        url = `http://www.pais.co.il/Lotto/Pages/last_Results.aspx?Lottery=${id}`;
     });
 
     // find by id
@@ -129,6 +129,8 @@ db.once('open', () => {
                 req.body.user_id = data._id;
                 req.body.timestamp = Date.now();
                 req.body.pais = false;
+                req.body.regular = req.body.regular.join(',');
+                req.body.strong = req.body.strong.join(',');
                 let results = new Results(req.body);
                 results.save((err, data) => {
                     const lotto_id = !err && data._id || null;
@@ -149,12 +151,6 @@ db.once('open', () => {
 
         Users.aggregate([
             {
-                $project: {
-                    strong: 1,
-                    regular: 1
-                }
-            },
-            {
                 $lookup: {
                     from: 'results',
                     localField: 'user_id',
@@ -164,7 +160,7 @@ db.once('open', () => {
             }
         ], (err, data) => {
             const response = Response.pack(err, data, "Lotto Results");
-            res.status(400).json(response);
+            res.status(200).json(response);
         });
     });
 
@@ -175,6 +171,6 @@ db.once('open', () => {
 
     /** Listen to application port */
     app.listen(app.get('port'), () => {
-        console.log('App Lotto listening on port '+app.get('port'));
+        console.log(`App Lotto listening on port ${app.get('port')}`);
     });
 });

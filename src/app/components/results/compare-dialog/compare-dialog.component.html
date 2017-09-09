@@ -1,0 +1,41 @@
+<h2 md-dialog-title translate>
+  <fa name="clone"></fa> Compare With Your Numbers
+</h2>
+<md-dialog-content>
+  <form [formGroup]="form">
+    <div class="form-group text-right">
+      <label for="passport" translate>Last 4 digits of passport ID</label>
+      <input id="passport"
+             formControlName="passport"
+             class="form-control"
+             [attr.maxlength]="4"
+             placeholder="xxxx"/>
+      <small [hidden]="form.get('passport').pristine || !form.get('passport').errors"
+             class="text-danger" translate>Invalid field</small>
+    </div>
+    <div class="form-group text-right">
+      <label for="phone" translate>Mobile Number</label>
+      <input id="phone"
+             formControlName="phone"
+             class="form-control"
+             [attr.maxlength]="11"
+             placeholder="xxxxxxxxxx"/>
+      <small [hidden]="!form.get('phone').touched || !form.get('phone').errors"
+             class="text-danger" translate>Invalid field</small>
+    </div>
+  </form>
+</md-dialog-content>
+<md-dialog-actions>
+  <button type="button"
+          class="btn btn-outline-primary"
+          md-dialog-close
+          translate>Close
+  </button>
+  <button type="submit"
+          [disabled]="form.invalid"
+          translate
+          class="btn btn-outline-primary"
+          (click)="compareUserResults()">
+    <fa name="clone"></fa>Compare
+  </button>
+</md-dialog-actions>

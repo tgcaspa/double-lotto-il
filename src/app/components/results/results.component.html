@@ -15,7 +15,15 @@
         <div class="col-12">
             <alert type="success" class="font-weight-normal text-center">
                 <p class="font-weight-bold mb-0">{{'Lottery Results No.'|translate}} {{paisLastResult?.lottery_id}}</p>
-                <small>{{'Date'|translate}} {{paisLastResult?.timestamp|date:'hh:mm MM/dd/y'}}</small>
+                <small class="mr-1">
+                    {{'Date'|translate}}
+                    <input type="text"
+                           bsDatepicker
+                           #dp="bsDatepicker"
+                           [(bsValue)]="lastPaisDate"
+                           [ngModel]="paisLastResult?.timestamp|date:'HH:mm MM/dd/y'">
+                    <fa name="caret-down"></fa>
+                </small>
             </alert>
         </div>
         <div class="col-12 mt-0">
@@ -33,17 +41,20 @@
     <!-- controls-wrap -->
     <div class="row controls-wrap mt-2">
         <div class="col text-center">
-            <app-compare-modal *ngIf="!userResultsVisible"
-                               (onCompare)="showUserResults($event)">
-            </app-compare-modal>
+            <!-- Button trigger compare-dialog -->
+            <button class="btn btn-outline-primary btn-compare"
+                    (click)="openDialog()"
+                    translate>
+                <fa name="clone"></fa> Compare
+            </button>
         </div>
     </div>
     <!-- end controls-wrap -->
     <!-- user-results -->
-    <div *ngIf="userResultsVisible" class="row mt-4">
+    <div class="row mt-4" [hidden]="!userResultsVisible">
         <div class="col">
             <div class="container">
-                <app-user-results [paisResults]="paisLastResult"></app-user-results>
+                <app-user-results [paisResult]="paisLastResult"></app-user-results>
             </div>
         </div>
     </div>

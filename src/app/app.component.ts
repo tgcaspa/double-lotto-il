@@ -16,7 +16,7 @@ export class AppComponent {
                 private resultsSvc: ResultsService) {
         // application language
         translate.use('he');
-        // last Pais results
+        // last Pais result
         const paisResult = sessionStorage.getItem(this.PLR_KEY);
         if(!paisResult) {
             resultsSvc
@@ -26,7 +26,7 @@ export class AppComponent {
                         sessionStorage.setItem(this.PLR_KEY, JSON.stringify(result));
                         this.resultsSvc.pushPaisLastResult$(result);
                     },
-                    (error: Response) => { alert(error.json()); }
+                    (error: Response) => { console.log(error); }
                 );
         } else {
             this.resultsSvc.pushPaisLastResult$(paisResult);

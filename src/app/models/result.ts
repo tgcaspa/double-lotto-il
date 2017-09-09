@@ -1,6 +1,8 @@
+import { CommonModel } from "./common";
+
 declare let _: any;
 
-export class ResultModel implements IResult {
+export class ResultModel extends CommonModel implements IResult {
     lottery_id: number;
     timestamp: number;
     regular: number[];
@@ -9,6 +11,7 @@ export class ResultModel implements IResult {
 
     constructor(attr?: object) {
         attr = _.assign({}, attr);
+        super(attr);
 
         this.lottery_id = attr['lottery_id'] || 0;
         this.timestamp = attr['timestamp'] || 0;
@@ -17,22 +20,22 @@ export class ResultModel implements IResult {
         this.pais = attr['pais'] == '1';
     }
 
-    setRegular(value) {
-        if(_.isString(value)) {
-            value = value.split(',');
-        } else if(!_.isArray(value)) {
-            value = [];
-        }
-        this.regular = value;
+    setRegular(numbers) {
+        this.regular = this._setNumbers(numbers);
     }
 
-    setStrong(value) {
-        if(_.isString(value)) {
-            value = value.split(',');
-        } else if(!_.isArray(value)) {
-            value = [];
+    setStrong(numbers) {
+        this.strong = this._setNumbers(numbers);
+    }
+
+    private _setNumbers(numbers): number[] {
+        if(_.isString(numbers)) {
+            numbers = numbers.split(',')
+                             .map((n) => Number(n));
+        } else if(!_.isArray(numbers)) {
+            numbers = [];
         }
-        this.strong = value;
+        return numbers;
     }
 
 }
