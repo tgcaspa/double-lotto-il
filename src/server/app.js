@@ -6,7 +6,6 @@ let _           = require('underscore');
 let path        = require('path');
 let morgan      = require('morgan');
 let mongoose    = require('mongoose');
-// let stitch      = require("mongodb-stitch");
 let bodyParser  = require('body-parser');
 let request     = require('request');
 let cheerio     = require('cheerio');
@@ -24,8 +23,6 @@ app.use(morgan('dev'));
 let db = mongoose.connection;
 mongoose.connect(dbConfig.getConnection(), { useMongoClient: true });
 mongoose.Promise = global.Promise;
-// let client = new stitch.StitchClient('lotto-kxlvg');
-// let db_lotto = client.service('mongodb', 'mongodb-atlas').db('lotto');
 // Models
 let Response = require('./models/response');
 let Results  = require('./models/mongoose/results');

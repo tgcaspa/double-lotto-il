@@ -22,9 +22,9 @@ let config = {
     q_authSource: '***'
 };
 
-function dbConfig() {}
+function DBConfig() {}
 
-dbConfig.prototype.getConnection = function () {
+DBConfig.prototype.getConnection = function () {
     let uri = "instance://user:password@clusters/schema?ssl=q_ssl&replicaSet=q_replicaSet&authSource=q_authSource";
     _.keys(config).map(function(v) {
         if(_.isArray(config[v])) {
@@ -38,4 +38,4 @@ dbConfig.prototype.getConnection = function () {
 /**
  * Module exports.
  */
-module.exports = new dbConfig;
+module.exports = new DBConfig;
