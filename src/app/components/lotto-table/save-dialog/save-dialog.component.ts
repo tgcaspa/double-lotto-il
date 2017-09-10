@@ -22,11 +22,11 @@ export class SaveDialogComponent {
                 @Inject(MD_DIALOG_DATA) public data: any,
                 public dialogRef: MdDialogRef<SaveDialogComponent>,) {
         this.form = fb.group({
-            'passport' : ['2093', Validators.compose([
+            'passport' : ['', Validators.compose([
                 Validators.required,
                 Validators.pattern("[0-9]{1,4}")
             ])],
-            'phone' : ['0525856742', Validators.compose([
+            'phone' : ['', Validators.compose([
                 Validators.required,
                 Validators.pattern("[0-9]{1,3}-?[0-9]+")
             ])]
