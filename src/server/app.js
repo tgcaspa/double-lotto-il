@@ -17,11 +17,10 @@ let appMetadata = require('../../config/app.metadata');
 // App configuration
 app.set('port', appMetadata.port);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(morgan('dev'));
 // DB connection
 let db = mongoose.connection;
-mongoose.connect(dbConfig.getConnection(), { useMongoClient: true });
+mongoose.connect(dbConfig.getConnection(), {useMongoClient: true});
 mongoose.Promise = global.Promise;
 // Models
 let Response = require('./models/response');
@@ -131,7 +130,7 @@ db.once('open', () => {
                 let results = new Results(req.body);
                 results.save((err, data) => {
                     const lotto_id = !err && data._id || null;
-                    const response3 = Response.pack(err, lotto_id, "Save Results");
+                    const response3 = Response.pack(err, {lottery_id:lotto_id}, "Save Results");
                     res.status(201).send(response3);
                 });
             }
@@ -146,6 +145,12 @@ db.once('open', () => {
             res.status(400).json(response1);
         }
 
+        let uparams = {
+            lottery_id: id,
+            passport: req.body.passport,
+            phone: req.body.phone
+        };
+
         Users.aggregate([
             {
                 $lookup: {
@@ -156,6 +161,12 @@ db.once('open', () => {
                 }
             }
         ], (err, data) => {
+            // let results = data.filter((d) => {
+            //     console.log(d.passport);
+            //     console.log(uparams.passport);
+            //     return d.passport === uparams.passport;
+            // });
+            // console.log(results);
             const response = Response.pack(err, data, "Lotto Results");
             res.status(200).json(response);
         });

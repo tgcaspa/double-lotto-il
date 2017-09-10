@@ -5,6 +5,7 @@ import { MD_DIALOG_DATA, MdDialogRef } from "@angular/material";
 import { ResultsService } from "../../../services/results.service";
 import { ResultModel } from "../../../models/result";
 import { UserResultModel } from "../../../models/user-result";
+import { UserModel } from "../../../models/user";
 
 @Component({
     selector: 'app-save-dialog',
@@ -51,10 +52,13 @@ export class SaveDialogComponent {
                 .saveUserResults(model)
                 .subscribe(
                     (result: ResultModel) => {
-                        this.dialogRef.close(true);
+                        let user = JSON.stringify(new UserModel(model));
+                        sessionStorage.setItem('USER', user);
+
+                        this.dialogRef.close((result.lottery_id != "") || false);
                     },
                     (error: Response) => {
-                        console.log(error);
+                        alert(error);
                     }
                 );
         }

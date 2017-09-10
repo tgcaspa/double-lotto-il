@@ -14,7 +14,7 @@ declare let _: any;
 @Injectable()
 export class ResultsService {
 
-    private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    private headers = new Headers({'Content-Type': 'application/json'});
     paisLastResult = new BehaviorSubject(null);
 
     constructor(private http: Http,
@@ -64,7 +64,7 @@ export class ResultsService {
 
     saveUserResults(obj: ResultModel): Observable<ResultModel> {
         const url = `${this.serverSvc.apiURL}/api/results/${obj.lottery_id}/save`;
-        return this.http.post(url, JSON.stringify(obj), this.headers)
+        return this.http.post(url, obj)
             .map((res: Response) => {
                 return new ResultModel(res.json().data);
             })

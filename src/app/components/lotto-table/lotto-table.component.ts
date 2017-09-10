@@ -34,7 +34,7 @@ export class LottoTableComponent implements OnInit {
             .subscribe((result: ResultModel) => {
                 this.paisLastResult = result;
             });
-        //
+        // init clean table
         this.initRegularNums();
         this.initStrongNums();
     }
@@ -120,10 +120,10 @@ export class LottoTableComponent implements OnInit {
     }
 
     isNumbersAreSelected():boolean {
-        // TODO: getSelectedKeys(regularNums)
-        //       getSelectedKeys(strongNums)
-        // return this.regularNums.length === 6 && this.strongNums.length === 1;
-        return true;
+        // TODO: simplify getting selected numbers
+        const countRegular = this.getSelectedKeys(this.regularNums);
+        const countStrong = this.getSelectedKeys(this.strongNums);
+        return (countRegular.length === 6) && (countStrong.length === 1);
     }
 
     openDialog(): void {
@@ -136,10 +136,12 @@ export class LottoTableComponent implements OnInit {
             direction: "rtl"
         });
 
-        dialogRef.afterClosed().subscribe((result: any) => {
+        dialogRef.afterClosed().subscribe((result: boolean) => {
             if(result === true) {
+                // init clean table
+                this.initRegularNums();
+                this.initStrongNums();
                 alert("המספרים נשמרו בהצלחה!");
-                // this.pageMessage = "Saved";
             }
         });
     }
