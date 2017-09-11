@@ -8,13 +8,13 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 declare let _: any;
 
 @Injectable()
 export class ResultsService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     paisLastResult = new BehaviorSubject(null);
 
     constructor(private http: Http,
