@@ -4,7 +4,7 @@
 <md-dialog-content>
     <form [formGroup]="form">
         <div class="form-group text-right">
-            <label for="passport">המספרים שנבחרו</label>
+            <label for="passport" translate>Selected Numbers</label>
             <p class="alert alert-dark text-center"
                dir="ltr">
                 {{regularNums|join:' - '}}
@@ -12,7 +12,7 @@
             </p>
         </div>
         <div class="form-group text-right">
-            <label for="passport">4 ספרות אחרונות של ת"ז</label>
+            <label for="passport" translate>Last 4 digits of passport ID</label>
             <input id="passport"
                    formControlName="passport"
                    class="form-control"
@@ -52,6 +52,6 @@
             class="btn btn-outline-primary"
             (click)="saveUserResults()"
             translate>
-        <fa name="check"></fa>Save
+        <fa name="check"></fa> Save
     </button>
 </md-dialog-actions>

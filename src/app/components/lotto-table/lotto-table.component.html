@@ -1,7 +1,7 @@
 <div class="text-center">
     <img src="../../../assets/images/double-lotto-logo.png"
          class="img-fluid"
-         alt="דאבל לוטו">
+         alt="{{'Double Lottery'|translate}}">
 </div>
 
 <ng-template #contentLoading>
@@ -18,7 +18,9 @@
         <div class="row table-wrap">
             <div class="col-3 cell-item title">
                 <div>
-                    <strong>טבלה 1</strong>
+                    <strong translate>
+                        Table <span>1</span>
+                    </strong>
                     <fa name="caret-right pull-right m-t-5"></fa>
                 </div>
             </div>
@@ -37,9 +39,8 @@
     <!-- strong numbers -->
     <section class="col-2 strong-nums">
         <div class="row">
-            <div class="col header-title">
-                <fa name="caret-down"></fa>
-                <strong>חזק</strong>
+            <div class="col header-title font-weight-bold" translate>
+                <fa name="caret-down"></fa> Strong
             </div>
         </div>
         <div class="row table-wrap">
@@ -66,9 +67,9 @@
     </div>
     <div class="col-6 text-left">
         <button class="btn btn-outline-primary btn-generate"
-                (click)="generateNumbers()">
-            <fa name="star-o"></fa>
-            הגרל
+                (click)="generateNumbers()"
+                translate>
+            <fa name="star-o"></fa> Do Lottery
         </button>
     </div>
     <div class="col-6 text-right">
@@ -77,7 +78,7 @@
         [disabled]="!isNumbersAreSelected()"
         (click)="openDialog()"
         translate>
-            <fa name="thumbs-o-up"></fa>Go For It
+            <fa name="thumbs-o-up"></fa> Go For It
         </button>
     </div>
 </div>
