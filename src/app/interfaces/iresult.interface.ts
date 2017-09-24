@@ -1,5 +1,5 @@
 interface IResult {
-    lottery_id: string;
+    lottery_id: number;
     timestamp: number;
     regular: number[];
     strong: number[];

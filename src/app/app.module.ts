@@ -10,7 +10,7 @@ import { LayoutMainHeaderComponent } from './components/layout/header/main-heade
 import { ResultsComponent } from './components/results/results.component';
 import { SaveDialogComponent } from './components/lotto-table/save-dialog/save-dialog.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AlertModule, BsDatepickerModule, CollapseModule, ModalModule } from "ngx-bootstrap";
+import { AlertModule, BsDropdownModule, CollapseModule, ModalModule } from "ngx-bootstrap";
 import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
 import { LayoutSidebarComponent } from './components/layout/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -24,6 +24,7 @@ import { JoinPipe } from "./pipes/join.pipe";
 import { UserResultsComponent } from './components/results/user-results/user-results.component';
 import { ConfigServerUrlsService } from "../../config/server-urls.service";
 import { CompareDialogComponent } from './components/results/compare-dialog/compare-dialog.component';
+import { PaisResultComponent } from './components/results/pais-result/pais-result.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -39,7 +40,8 @@ export function createTranslateLoader(http: HttpClient) {
         SaveDialogComponent,
         JoinPipe,
         UserResultsComponent,
-        CompareDialogComponent
+        CompareDialogComponent,
+        PaisResultComponent
     ],
     entryComponents: [
         SaveDialogComponent,
@@ -59,8 +61,8 @@ export function createTranslateLoader(http: HttpClient) {
         AppRouting,
         AlertModule.forRoot(),
         ModalModule.forRoot(),
+        BsDropdownModule.forRoot(),
         CollapseModule.forRoot(),
-        BsDatepickerModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

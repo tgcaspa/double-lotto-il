@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { JoinPipe } from "../../../pipes/join.pipe";
 import { MD_DIALOG_DATA, MdDialogRef } from "@angular/material";
 import { ResultsService } from "../../../services/results.service";
-import { ResultModel } from "../../../models/result";
 import { UserResultModel } from "../../../models/user-result";
 import { UserModel } from "../../../models/user";
 
@@ -44,18 +43,18 @@ export class SaveDialogComponent {
     saveUserResults() {
         if(this.form.valid) {
             let model = new UserResultModel(this.form.value);
-            model.lottery_id = this.data.paisLaResult.lottery_id;
+            model.lottery_id = this.data.lottery_id;
             model.regular = this.data.regularNums;
             model.strong = this.data.strongNums;
 
             this.resultsSvc
                 .saveUserResults(model)
                 .subscribe(
-                    (result: ResultModel) => {
+                    (result: boolean) => {
                         let user = JSON.stringify(new UserModel(model));
                         sessionStorage.setItem('USER', user);
 
-                        this.dialogRef.close((result.lottery_id != "") || false);
+                        this.dialogRef.close(result === true);
                     },
                     (error: Response) => {
                         alert(error);

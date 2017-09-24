@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ResultModel } from "../../models/result";
 import { ResultsService } from "../../services/results.service";
 import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
@@ -19,9 +19,15 @@ export class LottoTableComponent implements OnInit {
     readonly STRONG_MAX_SELECT = 1;
     readonly STRONG_CELLS = 7;
 
+    // selected numbers
     regularNums: number[] = [];
     strongNums: number[] = [];
+    // table cell's reference
+    regularCells: number[] = [];
+    strongCells: number[] = [];
+
     paisLastResult: ResultModel;
+    nextPaisLotteryId: number;
     pageMessage: string;
 
     constructor(private resultsSvc: ResultsService,
@@ -33,6 +39,7 @@ export class LottoTableComponent implements OnInit {
             .paisLastResult
             .subscribe((result: ResultModel) => {
                 this.paisLastResult = result;
+                this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
             });
         // init clean table
         this.initRegularNums();
@@ -45,11 +52,13 @@ export class LottoTableComponent implements OnInit {
     }
 
     initRegularNums() {
-        this.regularNums = new Array(this.REGULAR_CELLS).fill(0);
+        this.regularCells = new Array(this.REGULAR_CELLS).fill(0);
+        this.regularNums  = [];
     }
 
     initStrongNums() {
-        this.strongNums = new Array(this.STRONG_CELLS).fill(0);
+        this.strongCells = new Array(this.STRONG_CELLS).fill(0);
+        this.strongNums  = [];
     }
 
     generateNumbers() {
@@ -68,9 +77,10 @@ export class LottoTableComponent implements OnInit {
                 n = Math.floor(Math.random() * this.REGULAR_CELLS);
             } while (collection.indexOf(n) !== -1);
             collection.push(n);
-            this.regularNums[n] = 1;
+            this.regularCells[n] = 1;
         }
-        console.log(`regular: ${this.getSelectedKeys(this.regularNums)}`);
+        this.regularNums = this.getSelectedKeys(this.regularCells);
+        console.log(`regular: ${this.regularNums}`);
     }
 
     private generateStrongNums() {
@@ -81,9 +91,10 @@ export class LottoTableComponent implements OnInit {
                 n = Math.floor(Math.random() * this.STRONG_CELLS);
             } while (collection.indexOf(n) !== -1);
             collection.push(n);
-            this.strongNums[n] = 1;
+            this.strongCells[n] = 1;
         }
-        console.log(`strong: ${this.getSelectedKeys(this.strongNums)}`);
+        this.strongNums = this.getSelectedKeys(this.strongCells);
+        console.log(`strong: ${this.strongNums}`);
     }
 
     getSelectedKeys(numbers: number[]): number[] {
@@ -101,37 +112,35 @@ export class LottoTableComponent implements OnInit {
         const val = Number(!selected);
         switch(type) {
             case 'regular':
-                const countRegular = this.getSelectedKeys(this.regularNums);
-                if(val && countRegular.length >= this.REGULAR_MAX_SELECT) {
+                if(val && this.regularNums.length >= this.REGULAR_MAX_SELECT) {
                     alert(`אפשר לבחור לא יותר משישה מספרים רגילים.`);
                     return;
                 }
-                this.regularNums[ix] = val;
+                this.regularCells[ix] = val;
+                this.regularNums = this.getSelectedKeys(this.regularCells);
                 break;
             case 'strong':
-                const countStrong = this.getSelectedKeys(this.strongNums);
-                if(val && countStrong.length >= this.STRONG_MAX_SELECT) {
+                if(val && this.strongNums.length >= this.STRONG_MAX_SELECT) {
                     alert(`אפשר לבחור לא יותר ממספר אחד חזק.`);
                     return;
                 }
-                this.strongNums[ix] = val;
+                this.strongCells[ix] = val;
+                this.strongNums = this.getSelectedKeys(this.strongCells);
                 break;
         }
     }
 
     isNumbersAreSelected():boolean {
-        // TODO: simplify getting selected numbers
-        const countRegular = this.getSelectedKeys(this.regularNums);
-        const countStrong = this.getSelectedKeys(this.strongNums);
-        return (countRegular.length === 6) && (countStrong.length === 1);
+        return (this.regularNums.length === this.REGULAR_MAX_SELECT)
+            && (this.strongNums.length === this.STRONG_MAX_SELECT);
     }
 
     openDialog(): void {
         let dialogRef = this.dialog.open(SaveDialogComponent, {
             data: {
-                regularNums: this.getSelectedKeys(this.regularNums),
-                strongNums: this.getSelectedKeys(this.strongNums),
-                paisLaResult: this.paisLastResult
+                regularNums: this.regularNums,
+                strongNums: this.strongNums,
+                lottery_id: this.nextPaisLotteryId
             },
             direction: "rtl"
         });

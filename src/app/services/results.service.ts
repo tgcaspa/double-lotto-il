@@ -47,13 +47,16 @@ export class ResultsService {
     getResultsByIdFromPais(obj: ResultModel): Observable<ResultModel> {
         const url = `${this.serverSvc.apiURL}/api/results/pais/${obj.lottery_id}`;
         return this.http.get(url)
-            .map((res: Response) => res.json())
+            .map((res: Response) => {
+                const data = res.json().data;
+                return new ResultModel(data);
+            })
             .catch((err: Response) => Observable.throw(err))
     }
 
-    getUserResults(obj: ResultModel): Observable<UserResultModel[]> {
+    getUserResults(obj: UserResultModel): Observable<UserResultModel[]> {
         const url = `${this.serverSvc.apiURL}/api/results/${obj.lottery_id}`;
-        return this.http.post(url, JSON.stringify(obj))
+        return this.http.post(url, obj)
             .map((res: Response) => {
                 const data = res.json().data;
                 const results = data.length ? data[0]['results'] : [];
@@ -62,11 +65,12 @@ export class ResultsService {
             .catch((err: Response) => Observable.throw(err))
     }
 
-    saveUserResults(obj: ResultModel): Observable<ResultModel> {
+    saveUserResults(obj: ResultModel): Observable<boolean> {
         const url = `${this.serverSvc.apiURL}/api/results/${obj.lottery_id}/save`;
         return this.http.post(url, obj)
             .map((res: Response) => {
-                return new ResultModel(res.json().data);
+            debugger;
+                return res.json().data === 1;
             })
             .catch((err: Response) => Observable.throw(err))
     }

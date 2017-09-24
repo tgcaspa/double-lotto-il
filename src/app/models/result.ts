@@ -3,7 +3,7 @@ import { CommonModel } from "./common";
 declare let _: any;
 
 export class ResultModel extends CommonModel implements IResult {
-    lottery_id: string;
+    lottery_id: number;
     timestamp: number;
     regular: number[];
     strong: number[];
@@ -13,7 +13,7 @@ export class ResultModel extends CommonModel implements IResult {
         attr = _.assign({}, attr);
         super(attr);
 
-        this.lottery_id = attr['lottery_id'] || "";
+        this.lottery_id = attr['lottery_id'] || 0;
         this.timestamp = attr['timestamp'] || 0;
         this.setRegular(attr['regular']);
         this.setStrong(attr['strong']);

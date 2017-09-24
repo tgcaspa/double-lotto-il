@@ -13,7 +13,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build-sass": "cd node_modules/node-sass && node scripts/build -f && cd ../../",
-    "server-app": "nohup node src/server/app.js > /dev/null 2>&1 &"
+    "server-app": "node src/server/app.js",
+    "nohup-server-app": "nohup node src/server/app.js > /dev/null 2>&1 &"
   },
   "dependencies": {
     "@angular/animations": "^4.0.0",

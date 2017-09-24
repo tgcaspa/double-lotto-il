@@ -2,11 +2,11 @@
   .header {
     border-bottom: 1px dashed;
   }
-  .table-regular-nums {
-    border-right: 1px dashed;
-  }
 }
-
+.table-wrap > div.col-9,
+.table-regular-nums {
+  border-right: 1px dashed;
+}
 .matched {
   border: 1px solid red;
   width: 22px;

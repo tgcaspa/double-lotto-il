@@ -36,3 +36,9 @@ body{
 .bb-dashed-2 {
   border-bottom: 2px dashed;
 }
+*[dropdown] {
+  position: relative;
+  &.show ul.dropdown-menu {
+    display: block;
+  }
+}

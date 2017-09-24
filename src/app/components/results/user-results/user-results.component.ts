@@ -16,13 +16,12 @@ export class UserResultsComponent {
     @Input() paisResult: ResultModel;
     userResults: UserResultModel[];
 
-    constructor(private resultsSvc: ResultsService) {
-    }
+    constructor(private resultsSvc: ResultsService) {}
 
     loadUserResults(user: UserModel) {
         this.userResults = null;
 
-        let model = new ResultModel(user);
+        let model = new UserResultModel(user);
         model.lottery_id = this.paisResult.lottery_id;
 
         this.resultsSvc
@@ -31,9 +30,9 @@ export class UserResultsComponent {
                 (results: UserResultModel[]) => {
                     this.userResults = results;
                 },
-                (error) => {
+                (error: Response) => {
                     this.userResults = [];
-                    console.log(error);
+                    console.error(error);
                 }
             );
     }

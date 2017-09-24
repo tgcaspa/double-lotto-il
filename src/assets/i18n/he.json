@@ -7,6 +7,7 @@
   "Note": "הערה",
   "Storing the numbers will be used to compare the latest lottery results against the Miphal Ha-Pais" :"שמירת המספרים תשמש אותך להשוות תוצאות הלוטו אחרונים מול מפעל הפייס",
   "Lottery Results No.": "תוצאות הגרלה מס'",
+  "Next Lottery No.": "מס' הגרלה הבאה",
   "Date": "לתאריך",
   "The Strong Number": "המספר החזק",
   "Compare": "השווה",
@@ -26,5 +27,7 @@
   "Table": "טבלה",
   "Strong": "חזק",
   "Do Lottery": "הגרל",
-  "Selected Numbers": "המספרים שנבחרו"
+  "Selected Numbers": "המספרים שנבחרו",
+  "Last Lotteries": "הגרלות אחרונות",
+  "Last": "אחרון"
 }
