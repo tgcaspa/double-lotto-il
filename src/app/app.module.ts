@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
-import { AppRouting } from './app.routes';
+import { AppRoutingModule } from './app.routes';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
@@ -33,32 +33,19 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
-        LottoTableComponent,
         LayoutMainHeaderComponent,
-        LayoutSidebarComponent,
-        ResultsComponent,
-        SaveDialogComponent,
-        JoinPipe,
-        UserResultsComponent,
-        CompareDialogComponent,
-        PaisResultComponent
-    ],
-    entryComponents: [
-        SaveDialogComponent,
-        CompareDialogComponent
+        LayoutSidebarComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         HttpModule,
-        RouterModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         AngularFontAwesomeModule,
         MdProgressBarModule,
         MdDialogModule,
-        AppRouting,
         AlertModule.forRoot(),
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
@@ -69,11 +56,11 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
-        })
+        }),
+        AppRoutingModule
     ],
     providers: [
-        ConfigServerUrlsService,
-        ResultsService
+        ConfigServerUrlsService
     ],
     bootstrap: [AppComponent]
 })
