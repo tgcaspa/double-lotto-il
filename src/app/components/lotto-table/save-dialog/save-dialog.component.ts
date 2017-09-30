@@ -5,6 +5,7 @@ import { MD_DIALOG_DATA, MdDialogRef } from "@angular/material";
 import { ResultsService } from "../../../services/results.service";
 import { UserResultModel } from "../../../models/user-result";
 import { UserModel } from "../../../models/user";
+import { PageNotificationService } from "../../../services/page-notification.service";
 
 @Component({
     selector: 'app-save-dialog',
@@ -18,8 +19,9 @@ export class SaveDialogComponent {
 
     constructor(private fb: FormBuilder,
                 private resultsSvc: ResultsService,
+                private notifySvc: PageNotificationService,
                 @Inject(MD_DIALOG_DATA) public data: any,
-                public dialogRef: MdDialogRef<SaveDialogComponent>,) {
+                public dialogRef: MdDialogRef<SaveDialogComponent>) {
         this.form = fb.group({
             'passport' : ['', Validators.compose([
                 Validators.required,
@@ -56,8 +58,8 @@ export class SaveDialogComponent {
 
                         this.dialogRef.close(result === true);
                     },
-                    (error: Response) => {
-                        alert(error);
+                    (response: Response) => {
+                        this.notifySvc.set(response.text(), 400).show()
                     }
                 );
         }

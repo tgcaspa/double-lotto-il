@@ -4,18 +4,16 @@ import { AppRoutingModule } from './app.routes';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
-import { LayoutMainHeaderComponent } from './components/layout/header/main-header/main-header.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AlertModule, BsDropdownModule, CollapseModule, ModalModule } from "ngx-bootstrap";
-import { AngularFontAwesomeModule } from 'angular-font-awesome/angular-font-awesome';
-import { LayoutSidebarComponent } from './components/layout/sidebar/sidebar.component';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { MdDialogModule, MdProgressBarModule } from "@angular/material";
 import { HttpModule } from "@angular/http";
 import { ConfigServerUrlsService } from "../../config/server-urls.service";
+import { LayoutModule } from "./components/layout/layout.module";
+import { MdSnackBarModule } from "@angular/material";
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
+import { PageNotificationService } from "./services/page-notification.service";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { RouterModule } from "@angular/router";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -24,23 +22,16 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
-        LayoutMainHeaderComponent,
-        LayoutSidebarComponent
+        SnackBarComponent
+    ],
+    entryComponents: [
+        SnackBarComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         HttpModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        AngularFontAwesomeModule,
-        MdProgressBarModule,
-        MdDialogModule,
-        AlertModule.forRoot(),
-        ModalModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        CollapseModule.forRoot(),
+        RouterModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -48,10 +39,13 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
+        LayoutModule,
+        MdSnackBarModule,
         AppRoutingModule
     ],
     providers: [
-        ConfigServerUrlsService
+        ConfigServerUrlsService,
+        PageNotificationService
     ],
     bootstrap: [AppComponent]
 })

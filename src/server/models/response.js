@@ -24,10 +24,8 @@ Response.prototype.pack = function (error, data, message) {
     switch( this.detectType(error) ){
         case "success":
             return this.success(data, message);
-            break;
         case "error":
             return this.error(data, message);
-            break;
     }
 }
 

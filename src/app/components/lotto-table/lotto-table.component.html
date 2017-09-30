@@ -1,10 +1,12 @@
 <!-- lottery-details -->
 <div *ngIf="paisLastResult" class="row">
     <div class="col mt-0">
-        <alert type="dark" class="font-weight-normal text-center">
-            <span class="font-weight-bold" translate>Next Lottery No.</span>
-            <span class="font-weight-bold" translate>{{nextPaisLotteryId}}</span>
-        </alert>
+        <!--<alert type="dark" class="font-weight-normal text-center">-->
+        <p class="text-center font-weight-bold">
+            <span translate>Next Lottery No.</span>
+            {{nextPaisLotteryId}}
+        </p>
+        <!--</alert>-->
     </div>
 </div>
 <!-- end lottery-details -->

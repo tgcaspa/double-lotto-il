@@ -8,9 +8,13 @@ import { LottoTableComponent } from "./lotto-table.component";
 import { JoinPipe } from "../../pipes/join.pipe";
 import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
 import { ResultsService } from "../../services/results.service";
+import { AlertModule } from "ngx-bootstrap";
+import { MdDialogModule, MdProgressBarModule } from "@angular/material";
+import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { ReactiveFormsModule } from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, '../../../../assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -24,6 +28,11 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
+        AngularFontAwesomeModule,
+        MdProgressBarModule,
+        MdDialogModule,
+        AlertModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

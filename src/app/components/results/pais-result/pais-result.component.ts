@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResultModel } from "../../../models/result";
 import { ResultsService } from "../../../services/results.service";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { PageNotificationService } from "../../../services/page-notification.service";
 
 declare let _: any;
 
@@ -19,7 +20,9 @@ export class PaisResultComponent implements OnInit {
     paisLastResult: ResultModel;
     lottoArchiveList: number[];
 
-    constructor(private resultsSvc: ResultsService) {}
+    constructor(private resultsSvc: ResultsService,
+                private notifySvc: PageNotificationService
+    ) {}
 
     ngOnInit() {
         this.initPaisResults();
@@ -30,13 +33,16 @@ export class PaisResultComponent implements OnInit {
         // last Pais result
         this.resultsSvc
             .paisLastResult
-            .subscribe((result: ResultModel) => {
-                if (result instanceof ResultModel) {
+            .subscribe(
+                (result: ResultModel) => {
                     this.paisLastResult = result;
                     this.initLottoArchiveList();
                     this.archiveIdSubject.next(this.paisLastResult);
+                },
+                (response: Response) => {
+                    this.notifySvc.set(response.text(), 400).show()
                 }
-            });
+            );
     }
 
     private initLottoArchiveList() {
@@ -59,7 +65,9 @@ export class PaisResultComponent implements OnInit {
                     this.paisLastResult = result;
                     this.archiveIdSubject.next(this.paisLastResult);
                 },
-                (error: Response) => console.error(error)
+                (response: Response) => {
+                    this.notifySvc.set(response.text(), 400).show()
+                }
             );
     }
 }

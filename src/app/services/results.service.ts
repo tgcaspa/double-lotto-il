@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from "@angular/http";
+import { Http, Response, ResponseOptions } from "@angular/http";
 import { ConfigServerUrlsService } from "../../../config/server-urls.service";
 import { ResultModel } from "../models/result";
 import { UserResultModel } from "../models/user-result";
@@ -9,6 +9,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 
 declare let _: any;
 
@@ -37,8 +38,16 @@ export class ResultsService {
     getLastResultsFromPais(): Observable<ResultModel> {
         const url = `${this.serverSvc.apiURL}/api/results/pais/last`;
         return this.http.get(url)
-            .map((res: Response) => {
-                const data = res.json().data;
+            .map((response: Response) => {
+                const data = response.json().data;
+                if(!data) {
+                    throw new Response(
+                        new ResponseOptions({
+                            body:"Invalid Pais results",
+                            status: 400
+                        })
+                    );
+                }
                 return new ResultModel(data);
             })
             .catch((err: Response) => Observable.throw(err))
@@ -49,6 +58,14 @@ export class ResultsService {
         return this.http.get(url)
             .map((res: Response) => {
                 const data = res.json().data;
+                if(!data) {
+                    throw new Response(
+                        new ResponseOptions({
+                            body:"Invalid Pais results",
+                            status: 400
+                        })
+                    );
+                }
                 return new ResultModel(data);
             })
             .catch((err: Response) => Observable.throw(err))
@@ -59,6 +76,14 @@ export class ResultsService {
         return this.http.post(url, obj)
             .map((res: Response) => {
                 const data = res.json().data;
+                if(!data) {
+                    throw new Response(
+                        new ResponseOptions({
+                            body:"Invalid user results",
+                            status: 400
+                        })
+                    );
+                }
                 const results = data.length ? data[0]['results'] : [];
                 return UserResultModel.createFromArray(results);
             })
@@ -69,7 +94,6 @@ export class ResultsService {
         const url = `${this.serverSvc.apiURL}/api/results/${obj.lottery_id}/save`;
         return this.http.post(url, obj)
             .map((res: Response) => {
-            debugger;
                 return res.json().data === 1;
             })
             .catch((err: Response) => Observable.throw(err))

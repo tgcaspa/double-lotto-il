@@ -19,17 +19,17 @@
                    [attr.maxlength]="4"
                    placeholder="****"/>
             <small [hidden]="form.get('passport').pristine || !form.get('passport').errors"
-                   class="text-danger">שדה אינו תקין</small>
+                   class="text-danger" translate>Invalid field</small>
         </div>
         <div class="form-group text-right">
-            <label for="phone">מספר נייד</label>
+            <label for="phone" translate>Mobile Number</label>
             <input id="phone"
                    formControlName="phone"
                    class="form-control"
                    [attr.maxlength]="11"
                    placeholder="**********"/>
             <small [hidden]="form.get('phone').pristine || !form.get('phone').errors"
-                   class="text-danger">שדה אינו תקין</small>
+                   class="text-danger" translate>Invalid field</small>
         </div>
         <!-- info -->
         <div class="form-group text-right">

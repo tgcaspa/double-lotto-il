@@ -29,5 +29,9 @@
   "Do Lottery": "הגרל",
   "Selected Numbers": "המספרים שנבחרו",
   "Last Lotteries": "הגרלות אחרונות",
-  "Last": "אחרון"
+  "Last": "אחרון",
+  "Invalid Pais results": "תוצאות הפייס שגויים",
+  "The numbers have been saved successfully": "המספרים נשמרו בהצלחה!",
+  "You can select no more than six regular numbers": "אפשר לבחור לא יותר משישה מספרים רגילים",
+  "You can select no more than one strong number": "אפשר לבחור לא יותר ממספר אחד חזק"
 }

@@ -10,9 +10,13 @@ import { CompareDialogComponent } from "./compare-dialog/compare-dialog.componen
 import { JoinPipe } from "../../pipes/join.pipe";
 import { UserResultsComponent } from "./user-results/user-results.component";
 import { PaisResultComponent } from "./pais-result/pais-result.component";
+import { AlertModule, BsDropdownModule } from "ngx-bootstrap";
+import { MdDialogModule, MdProgressBarModule } from "@angular/material";
+import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { ReactiveFormsModule } from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, '../../../assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -28,6 +32,12 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
+        MdProgressBarModule,
+        MdDialogModule,
+        AngularFontAwesomeModule,
+        BsDropdownModule.forRoot(),
+        AlertModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -42,6 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         ])
     ],
+    exports: [RouterModule],
     providers: [
         ResultsService
     ]

@@ -3,20 +3,24 @@ import { ResultModel } from "../../../models/result";
 import { UserModel } from "../../../models/user";
 import { ResultsService } from "../../../services/results.service";
 import { UserResultModel } from "../../../models/user-result";
+import { PageNotificationService } from "../../../services/page-notification.service";
 
 declare let _: any;
 
 @Component({
     selector: 'app-user-results',
     templateUrl: './user-results.component.html',
-    styleUrls: ['./user-results.component.scss']
+    styleUrls: ['./user-results.component.scss'],
+    providers: [ResultsService]
 })
 export class UserResultsComponent {
 
     @Input() paisResult: ResultModel;
     userResults: UserResultModel[];
 
-    constructor(private resultsSvc: ResultsService) {}
+    constructor(private resultsSvc: ResultsService,
+                private notifySvc: PageNotificationService
+    ) {}
 
     loadUserResults(user: UserModel) {
         this.userResults = null;
@@ -30,9 +34,9 @@ export class UserResultsComponent {
                 (results: UserResultModel[]) => {
                     this.userResults = results;
                 },
-                (error: Response) => {
+                (response: Response) => {
                     this.userResults = [];
-                    console.error(error);
+                    this.notifySvc.set(response.text(), 400).show()
                 }
             );
     }

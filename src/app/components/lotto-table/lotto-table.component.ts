@@ -3,6 +3,8 @@ import { ResultModel } from "../../models/result";
 import { ResultsService } from "../../services/results.service";
 import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
 import { MdDialog } from "@angular/material";
+import { PageNotificationService } from "../../services/page-notification.service";
+import { TranslateService } from "@ngx-translate/core";
 
 declare let $:any;
 declare let _:any;
@@ -14,8 +16,10 @@ declare let _:any;
 })
 export class LottoTableComponent implements OnInit {
 
+    readonly ATTR_REGULAR = 'regular';
     readonly REGULAR_MAX_SELECT = 6;
     readonly REGULAR_CELLS = 37;
+    readonly ATTR_STRONG = 'strong';
     readonly STRONG_MAX_SELECT = 1;
     readonly STRONG_CELLS = 7;
 
@@ -31,16 +35,23 @@ export class LottoTableComponent implements OnInit {
     pageMessage: string;
 
     constructor(private resultsSvc: ResultsService,
-                public dialog: MdDialog) {}
+                private translate: TranslateService,
+                public dialog: MdDialog,
+                private notifySvc: PageNotificationService) {}
 
     ngOnInit() {
         // last Pais result
         this.resultsSvc
             .paisLastResult
-            .subscribe((result: ResultModel) => {
-                this.paisLastResult = result;
-                this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
-            });
+            .subscribe(
+                (result: ResultModel) => {
+                    this.paisLastResult = result;
+                    this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
+                },
+                (response: Response) => {
+                    this.notifySvc.set(response.text(), 400).show()
+                }
+            );
         // init clean table
         this.initRegularNums();
         this.initStrongNums();
@@ -80,7 +91,7 @@ export class LottoTableComponent implements OnInit {
             this.regularCells[n] = 1;
         }
         this.regularNums = this.getSelectedKeys(this.regularCells);
-        console.log(`regular: ${this.regularNums}`);
+        console.log(`${this.ATTR_REGULAR}: ${this.regularNums}`);
     }
 
     private generateStrongNums() {
@@ -94,7 +105,7 @@ export class LottoTableComponent implements OnInit {
             this.strongCells[n] = 1;
         }
         this.strongNums = this.getSelectedKeys(this.strongCells);
-        console.log(`strong: ${this.strongNums}`);
+        console.log(`${this.ATTR_STRONG}: ${this.strongNums}`);
     }
 
     getSelectedKeys(numbers: number[]): number[] {
@@ -111,17 +122,17 @@ export class LottoTableComponent implements OnInit {
         const selected = $(e.target).hasClass('selected');
         const val = Number(!selected);
         switch(type) {
-            case 'regular':
+            case this.ATTR_REGULAR:
                 if(val && this.regularNums.length >= this.REGULAR_MAX_SELECT) {
-                    alert(`אפשר לבחור לא יותר משישה מספרים רגילים.`);
+                    this.notifySvc.set("You can select no more than six regular numbers", 400).show();
                     return;
                 }
                 this.regularCells[ix] = val;
                 this.regularNums = this.getSelectedKeys(this.regularCells);
                 break;
-            case 'strong':
+            case this.ATTR_STRONG:
                 if(val && this.strongNums.length >= this.STRONG_MAX_SELECT) {
-                    alert(`אפשר לבחור לא יותר ממספר אחד חזק.`);
+                    this.notifySvc.set("You can select no more than one strong number", 400).show();
                     return;
                 }
                 this.strongCells[ix] = val;
@@ -150,7 +161,10 @@ export class LottoTableComponent implements OnInit {
                 // init clean table
                 this.initRegularNums();
                 this.initStrongNums();
-                alert("המספרים נשמרו בהצלחה!");
+
+                this.notifySvc
+                    .set("The numbers have been saved successfully", 200)
+                    .show()
             }
         });
     }
