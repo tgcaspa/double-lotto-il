@@ -35,7 +35,6 @@ export class LottoTableComponent implements OnInit {
     pageMessage: string;
 
     constructor(private resultsSvc: ResultsService,
-                private translate: TranslateService,
                 public dialog: MdDialog,
                 private notifySvc: PageNotificationService) {}
 
@@ -45,8 +44,13 @@ export class LottoTableComponent implements OnInit {
             .paisLastResult
             .subscribe(
                 (result: ResultModel) => {
-                    this.paisLastResult = result;
-                    this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
+                    if(this.paisLastResult instanceof ResultModel) {
+                        this.paisLastResult = result;
+                        this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
+                    } else {
+                        this.paisLastResult = new ResultModel();
+                        this.nextPaisLotteryId = -1;
+                    }
                 },
                 (response: Response) => {
                     this.notifySvc.set(response.text(), 400).show()
