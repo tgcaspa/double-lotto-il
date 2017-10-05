@@ -36,8 +36,10 @@ export class PaisResultComponent implements OnInit {
             .subscribe(
                 (result: ResultModel) => {
                     this.paisLastResult = result;
-                    this.initLottoArchiveList();
-                    this.archiveIdSubject.next(this.paisLastResult);
+                    if(this.paisLastResult instanceof ResultModel) {
+                        this.initLottoArchiveList();
+                        this.archiveIdSubject.next(this.paisLastResult);
+                    }
                 },
                 (response: Response) => {
                     this.notifySvc.set(response.text(), 400).show()
