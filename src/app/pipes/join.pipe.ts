@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { NgModule, Pipe, PipeTransform } from '@angular/core';
 
 declare let _ :any;
 @Pipe({
@@ -12,3 +12,11 @@ export class JoinPipe implements PipeTransform {
     }
 
 }
+
+@NgModule({
+    declarations: [
+        JoinPipe
+    ],
+    exports: [JoinPipe]
+})
+export class JoinPipeModule {}

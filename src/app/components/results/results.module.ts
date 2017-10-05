@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { ResultsComponent } from "./results.component";
 import { ResultsService } from "../../services/results.service";
 import { CompareDialogComponent } from "./compare-dialog/compare-dialog.component";
-import { JoinPipe } from "../../pipes/join.pipe";
+import { JoinPipeModule } from "../../pipes/join.pipe";
 import { UserResultsComponent } from "./user-results/user-results.component";
 import { PaisResultComponent } from "./pais-result/pais-result.component";
 import { AlertModule, BsDropdownModule } from "ngx-bootstrap";
@@ -16,13 +16,12 @@ import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { ReactiveFormsModule } from "@angular/forms";
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, '../../../assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
     declarations: [
         ResultsComponent,
-        JoinPipe,
         UserResultsComponent,
         CompareDialogComponent,
         PaisResultComponent
@@ -35,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
         ReactiveFormsModule,
         MdProgressBarModule,
         MdDialogModule,
+        JoinPipeModule,
         AngularFontAwesomeModule,
         BsDropdownModule.forRoot(),
         AlertModule.forRoot(),
@@ -52,7 +52,6 @@ export function createTranslateLoader(http: HttpClient) {
             }
         ])
     ],
-    exports: [RouterModule],
     providers: [
         ResultsService
     ]
