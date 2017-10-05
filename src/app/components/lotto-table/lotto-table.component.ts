@@ -44,12 +44,11 @@ export class LottoTableComponent implements OnInit {
             .paisLastResult
             .subscribe(
                 (result: ResultModel) => {
+                    this.paisLastResult = result;
                     if(this.paisLastResult instanceof ResultModel) {
-                        this.paisLastResult = result;
                         this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
                     } else {
-                        this.paisLastResult = new ResultModel();
-                        this.nextPaisLotteryId = -1;
+                        this.nextPaisLotteryId = 0;
                     }
                 },
                 (response: Response) => {
