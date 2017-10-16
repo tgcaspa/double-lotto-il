@@ -1,17 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { MdSnackBarModule } from "@angular/material";
+
+import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from './app.routes';
-import 'hammerjs';
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from "@angular/common/http";
-import { HttpModule } from "@angular/http";
 import { ConfigServerUrlsService } from "../../config/server-urls.service";
-import { LayoutModule } from "./components/layout/layout.module";
-import { MdSnackBarModule } from "@angular/material";
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PageNotificationService } from "./services/page-notification.service";
-import { RouterModule } from "@angular/router";
+
+import { LayoutModule } from "./components/layout/layout.module";
+import { HttpModule } from "@angular/http";
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, '../../assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -25,6 +32,13 @@ import { RouterModule } from "@angular/router";
         BrowserModule,
         HttpClientModule,
         HttpModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         RouterModule,
         LayoutModule,
         MdSnackBarModule,
