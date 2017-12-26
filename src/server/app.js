@@ -18,7 +18,7 @@ let Results  = require('./models/mongoose/results');
 let Users    = require('./models/mongoose/users');
 
 // App configuration
-app.set('port', appMetadata.port);
+app.set('port', process.env.PORT || appMetadata.port);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(morgan('dev'));
