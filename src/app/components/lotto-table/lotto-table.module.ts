@@ -4,18 +4,21 @@ import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MdDialogModule, MdProgressBarModule } from "@angular/material";
 import { TranslateModule } from "@ngx-translate/core";
-import { AlertModule } from "ngx-bootstrap";
+import { AlertModule, BsDropdownModule } from "ngx-bootstrap";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
 
 import { JoinPipeModule } from "../../pipes/join.pipe";
 import { ResultsService } from "../../services/results.service";
 import { LottoTableComponent } from "./lotto-table.component";
 import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
+import { LottoTableArchiveDetailsComponent } from "./archive-details/archive-details.component";
+import { ArchiveService } from "../../services/archive.service";
 
 @NgModule({
     declarations: [
         LottoTableComponent,
-        SaveDialogComponent
+        SaveDialogComponent,
+        LottoTableArchiveDetailsComponent
     ],
     entryComponents: [
         SaveDialogComponent
@@ -29,6 +32,7 @@ import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
         JoinPipeModule,
         TranslateModule,
         AlertModule.forRoot(),
+        BsDropdownModule.forRoot(),
         RouterModule.forChild([
             {
                 path: '',
@@ -37,7 +41,8 @@ import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
         ])
     ],
     providers: [
-        ResultsService
+        ResultsService,
+        ArchiveService
     ]
 })
 export class LottoTableModule {}

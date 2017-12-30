@@ -2,48 +2,21 @@
     <md-progress-bar mode="indeterminate"></md-progress-bar>
 </ng-template>
 
-<div *ngIf="paisLastResult; else contentLoading">
-    <!-- lottery-details -->
-    <div class="row">
-        <div class="col">
-            <alert type="success" class="font-weight-normal text-center">
-                <div>
-                    <span class="font-weight-bold" translate>Lottery Results No.</span>
-                    <div dropdown class="d-inline font-weight-bold mr-2">
-                        <a dropdownToggle (click)="false" class="alert-success">
-                            {{paisLastResult?.lottery_id}}
-                            <fa name="caret-down"></fa>
-                        </a>
-                        <ul *dropdownMenu class="dropdown-menu text-right p-0 m-0">
-                            <li>
-                                <a class="d-block p-2 alert-dark" translate>
-                                    <span>{{MAX_LAST_RESULTS}}</span> Last Lotteries
-                                </a>
-                            </li>
-                            <li *ngFor="let id of lottoArchiveList">
-                                <a class="dropdown-item p-2"
-                                   (click)="archiveIdSelected(id)">{{id}}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <span class="mr-1">
-                    {{'Date'|translate}} {{paisLastResult?.timestamp|date:'HH:mm dd/MM/y'}}
-                </span>
-            </alert>
-        </div>
-    </div>
-    <!-- end lottery-details -->
+<div *ngIf="!loadingPaisResults && paisLastResult; else contentLoading">
+    <!-- archive-details -->
+    <app-archive-details [last-result]="paisLastResult"
+                         [dir]="-1"
+                         (onArchiveIdSelected)="archiveIdSelected($event)">
+    </app-archive-details>
+    <!-- end archive-details -->
     <!-- lottery-numbers -->
     <div class="row">
         <div class="col mt-0">
             <alert type="success" class="font-weight-normal text-center">
-                <p class="mb-0"
-                   dir="ltr">
+                <p class="mb-0" dir="ltr">
                     <small class="pull-right" translate>Pais Numbers</small>
-                    {{paisLastResult?.regular|join:' - '}}
-                    <strong class="ml-3">{{paisLastResult?.strong|join}}</strong>
+                    {{selectedResult?.regular|join:' - '}}
+                    <strong class="ml-3">{{selectedResult?.strong|join}}</strong>
                 </p>
             </alert>
         </div>

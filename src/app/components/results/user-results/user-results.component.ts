@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ResultModel } from "../../../models/result";
 import { UserModel } from "../../../models/user";
 import { ResultsService } from "../../../services/results.service";
+import { ArchiveService } from "../../../services/archive.service";
 import { UserResultModel } from "../../../models/user-result";
 import { PageNotificationService } from "../../../services/page-notification.service";
 
@@ -13,14 +14,23 @@ declare let _: any;
     styleUrls: ['./user-results.component.scss'],
     providers: [ResultsService]
 })
-export class UserResultsComponent {
+export class UserResultsComponent implements OnInit {
 
-    @Input() paisResult: ResultModel;
+    paisResult: ResultModel;
     userResults: UserResultModel[];
 
     constructor(private resultsSvc: ResultsService,
+                private archiveSvc: ArchiveService,
                 private notifySvc: PageNotificationService
     ) {}
+
+    ngOnInit() {
+        this.archiveSvc
+            .onArchiveIdChanged$
+            .subscribe((result: ResultModel) => {
+                this.paisResult = result;
+            });
+    }
 
     loadUserResults(user: UserModel) {
         this.userResults = null;

@@ -1,15 +1,9 @@
-<!-- lottery-details -->
-<div *ngIf="paisLastResult" class="row">
-    <div class="col mt-0">
-        <!--<alert type="dark" class="font-weight-normal text-center">-->
-        <p class="text-center font-weight-bold">
-            <span translate>Next Lottery No.</span>
-            {{nextPaisLotteryId}}
-        </p>
-        <!--</alert>-->
-    </div>
-</div>
-<!-- end lottery-details -->
+<!-- archive-details -->
+<app-archive-details [last-result]="paisLastResult"
+                     [dir]="1"
+                     (onArchiveIdSelected)="archiveIdSelected($event)">
+</app-archive-details>
+<!-- end archive-details -->
 
 <div class="text-center">
     <img src="../../../assets/images/double-lotto-logo.png"

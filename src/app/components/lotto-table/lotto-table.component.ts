@@ -4,7 +4,6 @@ import { ResultsService } from "../../services/results.service";
 import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
 import { MdDialog } from "@angular/material";
 import { PageNotificationService } from "../../services/page-notification.service";
-import { TranslateService } from "@ngx-translate/core";
 
 declare let $:any;
 declare let _:any;
@@ -45,11 +44,11 @@ export class LottoTableComponent implements OnInit {
             .subscribe(
                 (result: ResultModel) => {
                     this.paisLastResult = result;
-                    if(this.paisLastResult instanceof ResultModel) {
-                        this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
-                    } else {
-                        this.nextPaisLotteryId = 0;
-                    }
+                    // if(this.paisLastResult instanceof ResultModel) {
+                    //     this.nextPaisLotteryId = this.paisLastResult.lottery_id + 1;
+                    // } else {
+                    //     this.nextPaisLotteryId = 0;
+                    // }
                 },
                 (response: Response) => {
                     this.notifySvc.set(response.text(), 400).show()
@@ -150,6 +149,7 @@ export class LottoTableComponent implements OnInit {
     }
 
     openDialog(): void {
+        debugger;
         let dialogRef = this.dialog.open(SaveDialogComponent, {
             data: {
                 regularNums: this.regularNums,
@@ -170,6 +170,10 @@ export class LottoTableComponent implements OnInit {
                     .show()
             }
         });
+    }
+
+    archiveIdSelected(lottery_id: number) {
+        this.nextPaisLotteryId = lottery_id;
     }
 
 }

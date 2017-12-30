@@ -6,6 +6,7 @@ import { MdDialog } from "@angular/material";
 import { UserResultsComponent } from "./user-results/user-results.component";
 import { UserModel } from "../../models/user";
 import { PaisResultComponent } from "./pais-result/pais-result.component";
+import { ArchiveService } from "../../services/archive.service";
 
 declare let _: any;
 
@@ -24,11 +25,12 @@ export class ResultsComponent implements OnInit {
     userModel: IUser;
     paisLastResult: ResultModel;
 
-    constructor(public dialog: MdDialog) {}
+    constructor(public dialog: MdDialog,
+                private archiveSvc: ArchiveService) {}
 
     ngOnInit() {
-        this.pResultsComponent
-            .archiveIdSubject
+        this.archiveSvc
+            .onArchiveIdChanged$
             .subscribe((result: ResultModel) => {
                 this.paisLastResult = result;
             });
