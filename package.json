@@ -1,10 +1,11 @@
 {
   "name": "double-lottery",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "contributors": [
     "Dmitri Hershkovitz <cmplerec@gmail.com> (https://github.com/tgcaspa)"
   ],
+  "description": "Generate and compare results of your lucky numbers against the Miphal Ha-Pais",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
