@@ -20,7 +20,7 @@
                 <div class="row">
                     <div *ngFor="let value of result.regular"
                          class="col-2 text-center">
-                        <span [class.matched]="isNumberMatched(paisResult.regular, value)">{{value}}</span>
+                        <span [class.matched]="isNumberMatched(paisResult.regular, value)">{{value|number:'2.0'}}</span>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                  class="col table-strong-nums">
                 <div class="row">
                     <div class="col-6 text-center">
-                        <span [class.matched]="isNumberMatched(paisResult.strong, value)">{{value}}</span>
+                        <span [class.matched]="isNumberMatched(paisResult.strong, value)">{{value|number:'2.0'}}</span>
                     </div>
                     <div class="col-6">({{uix+1}})</div>
                 </div>

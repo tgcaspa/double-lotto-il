@@ -1,4 +1,5 @@
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
+import { DecimalPipe } from "@angular/common";
 
 declare let _ :any;
 @Pipe({
@@ -8,7 +9,9 @@ export class JoinPipe implements PipeTransform {
 
     transform (input: any[], character: string = ''): any {
         if (!_.isArray(input)) return input;
-        return input.join(character);
+        return _
+            .map(input, (i) => new DecimalPipe('en').transform(i, '2.0'))
+            .join(character);
     }
 
 }

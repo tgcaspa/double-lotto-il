@@ -149,7 +149,6 @@ export class LottoTableComponent implements OnInit {
     }
 
     openDialog(): void {
-        debugger;
         let dialogRef = this.dialog.open(SaveDialogComponent, {
             data: {
                 regularNums: this.regularNums,
