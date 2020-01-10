@@ -1,41 +1,51 @@
-import { CommonModel } from "./common";
-
-declare let _: any;
+import { isArray, isObject, isString } from 'lodash';
+import { IResult } from '../interfaces/iresult.interface';
+import { CommonModel } from './common';
 
 export class ResultModel extends CommonModel implements IResult {
-    lottery_id: number;
+    lotteryId: number;
     timestamp: number;
     regular: number[];
     strong: number[];
     pais: boolean;
 
-    constructor(attr?: object) {
-        attr = _.assign({}, attr);
+  constructor(attr?: Partial<IResult>) {
+        attr = Object.assign({}, attr);
         super(attr);
 
-        this.lottery_id = attr['lottery_id'] || 0;
-        this.timestamp = attr['timestamp'] || 0;
-        this.setRegular(attr['regular']);
-        this.setStrong(attr['strong']);
-        this.pais = attr['pais'] == '1';
+        this.lotteryId = attr.lotteryId;
+        this.timestamp = attr.timestamp || 0;
+        this.setRegular(attr.regular);
+        this.setStrong(attr.strong);
+        this.pais = String(attr.pais) === 'true';
     }
 
-    setRegular(numbers) {
-        this.regular = this._setNumbers(numbers);
+    setRegular(numbers: any) {
+        this.regular = this._splitNumbers(numbers);
     }
 
-    setStrong(numbers) {
-        this.strong = this._setNumbers(numbers);
+    setStrong(numbers: any) {
+        this.strong = this._splitNumbers(numbers);
     }
 
-    private _setNumbers(numbers): number[] {
-        if(_.isString(numbers)) {
-            numbers = numbers.split(',')
-                             .map((n) => Number(n));
-        } else if(!_.isArray(numbers)) {
-            numbers = [];
+    private _splitNumbers(numbers: string | number | number[]): number[] {
+        let result: number[];
+
+        if (isString(numbers)) {
+            result = numbers.split(',')
+                            .map((n: string) => Number(n));
+        } else if (!isArray(numbers)) {
+          result = [];
+          if (Number.isInteger(numbers)) {
+            result.push(numbers);
+          }
         }
-        return numbers;
+
+        return result;
     }
 
 }
+
+
+export const isResultModel = (data: any): data is IResult =>
+  isObject(data) && 'lotteryId' in data && 'strong' in data && 'regular' in data;

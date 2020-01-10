@@ -1,0 +1,73 @@
+<form [formGroup]="tableFormArray">
+  <div class="row numbers-wrap text-center"
+       dir="ltr"
+       *ngFor="let table of tableFormArray?.controls; let line = index; last as isLast; trackBy: trackTableByFn">
+       <ng-container [formGroupName]="line">
+        <!-- regular-number -->
+        <section class="col regular-nums">
+          <div class="row">
+            <div class="col panel-actions text-left">
+              <button *ngIf="hasValue() && isLast && isAvailableToAddNewTable()"
+                      mat-raised-button
+                      class="btn btn-sm btn-link btn-add p-0"
+                      (click)="addNewTableFormGroup()"
+                      translate>
+                <fa name="plus"></fa> Add
+              </button>
+              <button *ngIf="isAvailableToRemoveTable()"
+                      mat-raised-button
+                      class="btn btn-sm btn-link btn-add p-0"
+                      (click)="removeTableFormGroup(line)"
+                      translate>
+                <fa name="minus"></fa> Remove
+              </button>
+            </div>
+            <div class="col"><br></div>
+          </div>
+          <div class="row table-wrap">
+            <div class="col-3 cell-item title">
+              <div>
+                <strong translate>
+                  Table <span>{{line + 1}}</span>
+                </strong>
+                <fa name="caret-right pull-right m-t-5"></fa>
+              </div>
+            </div>
+            <div *ngFor="let crv of table.get(ATTR_REGULAR)?.value; let ixr = index; trackBy: trackRowByFn"
+                  class="d-inline-block">
+              <div class="br" *ngIf="isNewLine_regular(ixr)"></div>
+              <div class="col cell-item mb-0">
+                <span class="title text-center">{{ixr + 1}}</span>
+                <span class="input text-center"
+                      [class.selected]="crv === 1"
+                  (click)="cellClicked(table.get(ATTR_REGULAR), ixr, ATTR_REGULAR)">_</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end regular-numbers -->
+
+        <!-- strong numbers -->
+        <section class="col strong-nums">
+          <div class="row">
+            <div class="col header-title font-weight-bold" translate>
+              <fa name="caret-down"></fa> Strong
+            </div>
+          </div>
+          <div class="row table-wrap">
+            <div class="col cell-item title">
+              <fa name="caret-right"></fa>
+            </div>
+            <div *ngFor="let csv of table.get(ATTR_STRONG)?.value; let ixs = index"
+                  class="col cell-item mb-1">
+              <span class="title text-center">{{ixs + 1}}</span>
+              <span class="input text-center"
+                    [class.selected]="csv === 1"
+                (click)="cellClicked(table.get(ATTR_STRONG), ixs, ATTR_STRONG)">_</span>
+            </div>
+          </div>
+        </section>
+        <!-- end strong-numbers -->
+       </ng-container>
+  </div>
+</form>

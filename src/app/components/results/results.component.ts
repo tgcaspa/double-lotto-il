@@ -1,31 +1,32 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ResultModel } from "../../models/result";
-import { JoinPipe } from "../../pipes/join.pipe";
-import { CompareDialogComponent } from "./compare-dialog/compare-dialog.component";
-import { MdDialog } from "@angular/material";
-import { UserResultsComponent } from "./user-results/user-results.component";
-import { UserModel } from "../../models/user";
-import { PaisResultComponent } from "./pais-result/pais-result.component";
-import { ArchiveService } from "../../services/archive.service";
-
-declare let _: any;
+import { MatDialog } from '@angular/material/dialog';
+import { ResultModel } from '../../models/result';
+import { JoinPipe } from '../../pipes/join.pipe';
+import { CompareDialogComponent } from './compare-dialog/compare-dialog.component';
+import { UserResultsComponent } from './user-results/user-results.component';
+import { UserModel } from '../../models/user';
+import { PaisResultComponent } from './pais-result/pais-result.component';
+import { ArchiveService } from '../../services/archive.service';
+import { IUser } from 'src/app/interfaces/iuser.interface';
 
 @Component({
-    selector: 'results',
+    selector: 'app-results',
     templateUrl: './results.component.html',
     styleUrls: ['./results.component.scss'],
     providers: [JoinPipe]
 })
 export class ResultsComponent implements OnInit {
 
-    @ViewChild(UserResultsComponent)
-        uResultsComponent: UserResultsComponent;
-    @ViewChild(PaisResultComponent)
-        pResultsComponent: PaisResultComponent;
+    @ViewChild(UserResultsComponent, { static: true })
+    uResultsComponent: UserResultsComponent;
+
+    @ViewChild(PaisResultComponent, { static: true })
+    pResultsComponent: PaisResultComponent;
+
     userModel: IUser;
     paisLastResult: ResultModel;
 
-    constructor(public dialog: MdDialog,
+    constructor(public dialog: MatDialog,
                 private archiveSvc: ArchiveService) {}
 
     ngOnInit() {
@@ -37,16 +38,16 @@ export class ResultsComponent implements OnInit {
     }
 
     openDialog(): void {
-        let dialogRef = this.dialog.open(CompareDialogComponent, {
+        const dialogRef = this.dialog.open(CompareDialogComponent, {
             data: {
-                lottery_id: this.paisLastResult.lottery_id
+                lotteryId: this.paisLastResult.lotteryId
             },
-            direction: "rtl"
+            direction: 'rtl'
         });
 
         dialogRef.afterClosed().subscribe((user: IUser) => {
             this.userModel = null;
-            if(user instanceof UserModel){
+            if (user instanceof UserModel) {
                 this.userModel = user;
                 this.uResultsComponent.loadUserResults(this.userModel);
             }
@@ -54,7 +55,7 @@ export class ResultsComponent implements OnInit {
     }
 
     reloadResults() {
-        if(this.userModel instanceof UserModel){
+        if (this.userModel instanceof UserModel) {
             this.uResultsComponent.loadUserResults(this.userModel);
         }
     }

@@ -1,13 +1,15 @@
 <ng-template #contentLoading>
-    <md-progress-bar mode="indeterminate"></md-progress-bar>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-template>
 
 <div *ngIf="!loadingPaisResults && paisLastResult; else contentLoading">
     <!-- archive-details -->
-    <app-archive-details [last-result]="paisLastResult"
-                         [dir]="-1"
-                         (onArchiveIdSelected)="archiveIdSelected($event)">
-    </app-archive-details>
+    <alert type="success" class="font-weight-normal text-center">
+        <app-archive-details [last-result]="paisLastResult"
+                            [dir]="-1"
+                            (onArchiveIdSelected)="archiveIdSelected($event)">
+        </app-archive-details>
+    </alert>
     <!-- end archive-details -->
     <!-- lottery-numbers -->
     <div class="row">

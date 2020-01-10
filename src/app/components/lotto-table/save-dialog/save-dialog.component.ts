@@ -1,11 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { JoinPipe } from "../../../pipes/join.pipe";
-import { MD_DIALOG_DATA, MdDialogRef } from "@angular/material";
-import { ResultsService } from "../../../services/results.service";
-import { UserResultModel } from "../../../models/user-result";
-import { UserModel } from "../../../models/user";
-import { PageNotificationService } from "../../../services/page-notification.service";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { take } from 'rxjs/operators';
+import { JoinPipe } from '../../../pipes/join.pipe';
+import { ResultsService } from '../../../services/results.service';
+import { UserResultModel } from '../../../models/user-result';
+import { UserModel } from '../../../models/user';
+import { PageNotificationService } from '../../../services/page-notification.service';
+import { ResultModel } from 'src/app/models/result';
 
 @Component({
     selector: 'app-save-dialog',
@@ -20,47 +22,47 @@ export class SaveDialogComponent {
     constructor(private fb: FormBuilder,
                 private resultsSvc: ResultsService,
                 private notifySvc: PageNotificationService,
-                @Inject(MD_DIALOG_DATA) public data: any,
-                public dialogRef: MdDialogRef<SaveDialogComponent>) {
-        this.form = fb.group({
-            'passport' : ['', Validators.compose([
+                @Inject(MAT_DIALOG_DATA) public data: ResultModel,
+                public dialogRef: MatDialogRef<SaveDialogComponent>) {
+        this.form = this.fb.group({
+            passport : ['', Validators.compose([
                 Validators.required,
-                Validators.pattern("[0-9]{1,4}")
+                Validators.pattern('[0-9]{1,4}')
             ])],
-            'phone' : ['', Validators.compose([
+            phone : ['', Validators.compose([
                 Validators.required,
-                Validators.pattern("[0-9]{1,3}-?[0-9]+")
+                Validators.pattern('[0-9]{1,3}-?[0-9]+')
             ])]
         });
     }
 
     get regularNums() {
-        return this.data.regularNums;
+        return this.data.regular;
     }
 
     get strongNums() {
-        return this.data.strongNums;
+        return this.data.strong;
     }
 
     saveUserResults() {
-        if(this.form.valid) {
-            let model = new UserResultModel(this.form.value);
-            model.lottery_id = this.data.lottery_id;
-            model.regular = this.data.regularNums;
-            model.strong = this.data.strongNums;
+        if (this.form.valid) {
+            debugger;
+            const model = new UserResultModel(this.form.value);
+            model.lotteryId = this.data.lotteryId;
+            model.regular = this.data.regular;
+            model.strong = this.data.strong;
 
             this.resultsSvc
                 .saveUserResults(model)
+                .pipe(take(1))
                 .subscribe(
                     (result: boolean) => {
-                        let user = JSON.stringify(new UserModel(model));
+                        const user = JSON.stringify(new UserModel(model));
                         sessionStorage.setItem('USER', user);
 
                         this.dialogRef.close(result === true);
                     },
-                    (response: Response) => {
-                        this.notifySvc.set(response.text(), 400).show()
-                    }
+                    (err: Error) => this.notifySvc.set(err.message, 400).show()
                 );
         }
     }

@@ -1,14 +1,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '../../../node_modules/bootstrap/scss/bootstrap';
-@import url('https://fonts.googleapis.com/css?family=Assistant:400,700&subset=hebrew');
+@import '~bootstrap/scss/bootstrap';
 @import "colors";
 
-body{
-  background-color: #fefadf;
+body {
+  background-color: $yellow-light;
   direction: rtl !important;
   font-family: 'Assistant', sans-serif;
 }
-.row{
+.row {
   line-height: 24px;
 }
 .mb-5 {
@@ -29,6 +28,10 @@ body{
   &:not(:disabled) { cursor: pointer; }
   &:disabled { cursor: not-allowed; }
   &:focus { outline: none; }
+  &[disabled].btn-outline-* {
+    border-color: gray;
+    color: gray;
+  }
 }
 .bt-dashed-2 {
   border-top: 2px dashed;

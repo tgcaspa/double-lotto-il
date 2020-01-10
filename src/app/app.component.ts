@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
-import { TranslateService } from "@ngx-translate/core";
-import { ResultsService } from "./services/results.service";
-import { ResultModel } from "./models/result";
-import { MdSnackBar } from "@angular/material";
-import { SnackBarComponent } from "./components/snack-bar/snack-bar.component";
-import { PageNotificationService } from "./services/page-notification.service";
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
+import { ResultsService } from './services/results.service';
+import { ResultModel } from './models/result';
+import { PageNotificationService } from './services/page-notification.service';
 
 @Component({
-    selector: 'app-lotto',
+    selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     providers: [ResultsService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     readonly PLR_KEY = 'PAIS_LAST_RESULT';
 
@@ -21,23 +20,32 @@ export class AppComponent {
                 private notifySvc: PageNotificationService) {
         // application language
         translate.use('he');
-        // last Pais result
-        const paisResult = sessionStorage.getItem(this.PLR_KEY);
-        if(!paisResult) {
-            resultsSvc
-                .getLastResultsFromPais()
-                .subscribe(
-                    (result: ResultModel) => {
-                        sessionStorage.setItem(this.PLR_KEY, JSON.stringify(result));
-                        this.resultsSvc.pushPaisLastResult$(result);
-                    },
-                    (response: Response) => {
-                        this.notifySvc.set(response.text(), 400).show()
-                    }
-                );
-        } else {
-            this.resultsSvc.pushPaisLastResult$(paisResult);
-        }
+    }
+
+    ngOnInit(): void {
+      // last Pais result
+      this.resultsSvc
+          .getLastResultsFromPais()
+          .pipe(take(1))
+          .subscribe(
+            (result: ResultModel) => this.resultsSvc.pushPaisLastResult$(result),
+            (err: Error) => this.notifySvc.set(err.message, 400).show()
+          );
+      // const paisResult = sessionStorage.getItem(this.PLR_KEY);
+      // if (!paisResult) {
+      //   this.resultsSvc
+      //       .getLastResultsFromPais()
+      //       .pipe(take(1))
+      //       .subscribe(
+      //         (result: ResultModel) => {
+      //           sessionStorage.setItem(this.PLR_KEY, JSON.stringify(result));
+      //           this.resultsSvc.pushPaisLastResult$(result);
+      //         },
+      //         (err: Error) => this.notifySvc.set(err.message, 400).show()
+      //       );
+      // } else {
+      //   this.resultsSvc.pushPaisLastResult$(paisResult);
+      // }
     }
 
 }

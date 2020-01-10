@@ -1,17 +1,19 @@
-import { ResultModel } from "./result";
+import { ResultModel } from './result';
+import { UserModel } from './user';
+import { IResult } from '../interfaces/iresult.interface';
+import { IUser } from '../interfaces/iuser.interface';
 
-declare let _: any;
+export type IUserResult = IResult & IUser;
 
-export class UserResultModel extends ResultModel implements IUser {
-    passport: number;
+export class UserResultModel extends ResultModel implements IUserResult {
+    passport: string;
     phone: string;
 
-    constructor(attr?: object) {
-        attr = _.assign({}, attr);
+    constructor(attr?: Partial<IUserResult>) {
+        attr = Object.assign({}, attr);
         super(attr);
 
-        this.passport = attr['passport'] || 0;
-        this.phone = attr['phone'] || "";
+        Object.assign(this, new UserModel(attr));
     }
 
 }

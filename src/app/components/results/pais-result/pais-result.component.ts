@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ResultModel } from "../../../models/result";
-import { ResultsService } from "../../../services/results.service";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { PageNotificationService } from "../../../services/page-notification.service";
-import { ResultArchiveDetailsComponent } from "./archive-details/archive-details.component";
-import { ArchiveService } from "../../../services/archive.service";
-
-declare let _: any;
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { take } from 'rxjs/operators';
+import { ResultModel } from '../../../models/result';
+import { ResultsService } from '../../../services/results.service';
+import { ArchiveService } from '../../../services/archive.service';
+import { ArchiveDetailsComponent } from '../../archive-details/archive-details.component';
 
 @Component({
     selector: 'app-pais-result',
@@ -14,18 +12,19 @@ declare let _: any;
     styleUrls: ['./pais-result.component.scss']
 })
 export class PaisResultComponent implements OnInit {
-    @ViewChild(ResultArchiveDetailsComponent)
-        archiveComponent: ResultArchiveDetailsComponent;
+    @ViewChild(ArchiveDetailsComponent, {static: true})
+    archiveComponent: ArchiveDetailsComponent;
+
     paisLastResult: ResultModel;
     selectedResult: ResultModel;
     lottoArchiveList: number[];
-    loadingPaisResults: boolean = false;
+    loadingPaisResults = false;
 
     constructor(private resultsSvc: ResultsService,
-                private notifySvc: PageNotificationService,
                 private archiveSvc: ArchiveService) {
         this.archiveSvc
             .onArchiveIdChanged$
+            .pipe(untilDestroyed(this))
             .subscribe((result: ResultModel) => {
                 this.selectedResult = result;
             });
@@ -37,9 +36,11 @@ export class PaisResultComponent implements OnInit {
 
     initPaisResults() {
         this.selectedResult = this.paisLastResult = null;
+
         // last Pais result
         this.resultsSvc
-            .paisLastResult
+            .paisLastResult$
+            .pipe(take(1))
             .subscribe((result: ResultModel) => {
                 this.selectedResult = this.paisLastResult = result;
                 this.archiveSvc.onArchiveIdChanged$.next(result);

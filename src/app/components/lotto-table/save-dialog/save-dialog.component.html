@@ -1,15 +1,25 @@
-<h2 md-dialog-title class="text-right" translate>
-    <fa name="star-o"></fa> Save Your Lucky Numbers
+<h2 mat-dialog-title class="text-right" translate>
+    <fa name="star-o"></fa> Saving Your Lucky Numbers
 </h2>
-<md-dialog-content>
+<mat-dialog-content>
     <form [formGroup]="form">
         <div class="form-group text-right">
             <label for="passport" translate>Selected Numbers</label>
-            <p class="alert alert-dark text-center"
+            <table class="table-results alert alert-dark w-100 m-0 text-center">
+                <tr class="thead">
+                  <td translate>The Strong Number</td>
+                  <td translate>Regular Numbers</td>
+                </tr>
+                <tr class="tbody">
+                  <td><b>{{strongNums|join}}</b></td>
+                  <td>{{regularNums|join:' - '}}</td>
+                </tr>
+            </table>
+            <!-- <p class=""
                dir="ltr">
-                {{regularNums|join:' - '}}
-                <strong class="ml-3">{{strongNums|join}}</strong>
-            </p>
+
+                <strong class="ml-3"></strong>
+            </p> -->
         </div>
         <div class="form-group text-right">
             <label for="passport" translate>Last 4 digits of passport ID</label>
@@ -40,11 +50,11 @@
         </div>
         <!-- end info -->
     </form>
-</md-dialog-content>
-<md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
     <button type="button"
             class="btn btn-outline-primary"
-            md-dialog-close
+            mat-dialog-close
             translate>Close
     </button>
     <button type="submit"
@@ -54,4 +64,4 @@
             translate>
         <fa name="check"></fa> Save
     </button>
-</md-dialog-actions>
+</mat-dialog-actions>

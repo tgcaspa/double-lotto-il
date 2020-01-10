@@ -1,7 +1,7 @@
-<h2 md-dialog-title translate>
+<h2 mat-dialog-title translate>
   <fa name="clone"></fa> Compare With Your Numbers
 </h2>
-<md-dialog-content>
+<mat-dialog-content>
   <form [formGroup]="form">
     <div class="form-group text-right">
       <label for="passport" translate>Last 4 digits of passport ID</label>
@@ -30,11 +30,11 @@
                 translate>Clear</span>
       </div>
   </form>
-</md-dialog-content>
-<md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
   <button type="button"
           class="btn btn-outline-primary"
-          md-dialog-close
+          mat-dialog-close
           translate>Close
   </button>
   <button type="submit"
@@ -44,4 +44,4 @@
           (click)="compareUserResults()">
     <fa name="clone"></fa>Compare
   </button>
-</md-dialog-actions>
+</mat-dialog-actions>
