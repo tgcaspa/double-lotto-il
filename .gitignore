@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# configs
+/config/app.metadata.js
+/src/CNAME
+
 # compiled output
 /dist
 /tmp
