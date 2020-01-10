@@ -1,13 +1,11 @@
-import { Injectable } from "@angular/core";
-import * as appMetadata from "./app.metadata";
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ConfigServerUrlsService {
 
-    readonly _URL = `http://localhost:${appMetadata.port}`;
-
-    get apiURL(): string {
-        return this._URL;
-    }
+  get apiURL(): string {
+    return environment.serverEndpoint;
+  }
 
 }
