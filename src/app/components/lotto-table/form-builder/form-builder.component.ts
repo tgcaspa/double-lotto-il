@@ -48,17 +48,22 @@ export class LottoTableFormBuilderComponent implements LottoTableFormBuilderComp
     if (isEmpty(result)) {
       return false;
     }
-    if (this.getSelectedNumbers(result.regular).length < this.REGULAR_MAX_SELECT) {
+    if (result.regular.length < this.REGULAR_MAX_SELECT) {
       return false;
     }
-    if (this.getSelectedNumbers(result.strong).length < this.STRONG_MAX_SELECT) {
+    if (result.strong.length < this.STRONG_MAX_SELECT) {
       return false;
     }
     return true;
   }
 
   getValue(): IFormResults[] {
-    return this.tableFormArray.getRawValue() as IFormResults[];
+    const rawValue = this.tableFormArray.getRawValue() as IFormResults[];
+    return rawValue.map(result => {
+      result.regular = this.getSelectedNumbers(result.regular);
+      result.strong  = this.getSelectedNumbers(result.strong);
+      return result;
+    });
   }
 
   isAvailableToAddNewTable(): boolean {

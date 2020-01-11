@@ -1,3 +1,4 @@
+import { IResult } from 'src/app/interfaces/iresult.interface';
 
 export abstract class LottoTableFormBuilderComponentRef {
   abstract initTable(): void;
@@ -6,7 +7,4 @@ export abstract class LottoTableFormBuilderComponentRef {
   abstract getValue(): IFormResults[];
 }
 
-export interface IFormResults {
-  regular: number[];
-  strong: number[];
-}
+export type IFormResults = Pick<IResult, 'regular' | 'strong'>;

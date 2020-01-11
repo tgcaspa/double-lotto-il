@@ -19,7 +19,7 @@ export class LottoTableArchiveDetailsComponent extends ArchiveDetailsComponent
             this.paisLastResult.lotteryId = this.calcLastLotteryId(this.paisLastResult.lotteryId, this.direction);
             this.selectedResultForm.patchValue(this.paisLastResult);
 
-            this.onArchiveIdSelected.next(this.selectedResultForm.get('lotteryId'));
+            this.onArchiveIdSelected.next(this.selectedResultForm.get('lotteryId').value);
           }
         }
     }

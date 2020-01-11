@@ -9,14 +9,14 @@ export class ResultModel extends CommonModel implements IResult {
     strong: number[];
     pais: boolean;
 
-  constructor(attr?: Partial<IResult>) {
+    constructor(attr?: Partial<IResult>) {
         attr = Object.assign({}, attr);
         super(attr);
 
         this.lotteryId = attr.lotteryId;
         this.timestamp = attr.timestamp || 0;
-        this.setRegular(attr.regular);
-        this.setStrong(attr.strong);
+        this.regular = attr.regular;
+        this.strong = attr.strong;
         this.pais = String(attr.pais) === 'true';
     }
 
