@@ -86,9 +86,9 @@ export class ResultsService {
         );
     }
 
-    saveUserResults(obj: ResultModel): Observable<boolean> {
-        const url = `${this.serverSvc.apiURL}/api/results/${obj.lotteryId}/save`;
-        return this.http.post(url, obj).pipe(
+    saveUserResults(data: UserResultModel): Observable<boolean> {
+        const url = `${this.serverSvc.apiURL}/api/results/${data.lotteryId}/save`;
+        return this.http.post(url, data).pipe(
           map((response: any) => response.data === 1),
           catchError((err: any) => throwError(err))
         );
