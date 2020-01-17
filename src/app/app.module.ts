@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routes';
 
 import { AppComponent } from './app.component';
-import { ConfigServerUrlsService } from '../../config/server-urls.service';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { PageNotificationService } from './services/page-notification.service';
 
@@ -43,7 +42,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule
     ],
     providers: [
-        ConfigServerUrlsService,
         PageNotificationService
     ],
     bootstrap: [AppComponent]

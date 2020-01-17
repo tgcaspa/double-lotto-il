@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isString } from 'lodash';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ConfigServerUrlsService } from '../../../config/server-urls.service';
+import { ConfigServerService } from './config-server.service';
 import { IResult } from '../interfaces/iresult.interface';
 import { ResultModel, isResultModel } from '../models/result';
 import { UserResultModel } from '../models/user-result';
@@ -18,7 +18,7 @@ export class ResultsService {
     paisLastResult$ = new BehaviorSubject<ResultModel>(null);
 
     constructor(private http: HttpClient,
-                private serverSvc: ConfigServerUrlsService) {}
+                private serverSvc: ConfigServerService) {}
 
     pushPaisLastResult$(result: any) {
       if (!(result instanceof ResultModel)) {
@@ -67,27 +67,27 @@ export class ResultsService {
 
     getUserResults(obj: UserResultModel): Observable<UserResultModel[]> {
         const url = `${this.serverSvc.apiURL}/api/results/${obj.lotteryId}`;
-        return this.http.post(url, obj).pipe(
-          map((response: any) => {
-            const {data} = response;
-            if (!data) {
-              // TODO: fix it.
-              // throw new Response(
-              //     new ResponseOptions({
-              //         body:'Invalid user results',
-              //         status: 400
-              //     })
-              // );
-            }
-            const results = data.length ? data[0].results : [];
-            return UserResultModel.createFromArray(results);
-          }),
-          catchError((err: any) => throwError(err))
+        return this.http.post<UserResultModel[]>(url, obj).pipe(
+          // map((response: any) => {
+          //   const {data} = response;
+          //   if (!data) {
+          //     // TODO: fix it.
+          //     // throw new Response(
+          //     //     new ResponseOptions({
+          //     //         body:'Invalid user results',
+          //     //         status: 400
+          //     //     })
+          //     // );
+          //   }
+          //   const results = data.length ? data[0].results : [];
+          //   return UserResultModel.createFromArray(results);
+          // }),
+          // catchError((err: any) => throwError(err))
         );
     }
 
     saveUserResults(data: UserResultModel): Observable<boolean> {
-        const url = `${this.serverSvc.apiURL}/api/results/${data.lotteryId}/save`;
+        const url = `${this.serverSvc.apiURL}/api/results/${data.lotteryId}`;
         return this.http.post(url, data).pipe(
           map((response: any) => response.data === 1),
           catchError((err: any) => throwError(err))
