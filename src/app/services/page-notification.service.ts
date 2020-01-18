@@ -3,7 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
 import { MatSnackBarConfig, MatSnackBar } from '@angular/material/snack-bar';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PageNotificationService {
 
     static optionsDefault: MatSnackBarConfig = {

@@ -41,9 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatSnackBarModule,
         AppRoutingModule
     ],
-    providers: [
-        PageNotificationService
-    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
