@@ -1,4 +1,5 @@
-export const environment = {
-  production: true,
-  serverEndpoint: '[SERVER_ENDPOINT]'
-};
+import { appConfig } from './app-config';
+
+export const environment = {...appConfig, ...{
+  production: true
+}};
