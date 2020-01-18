@@ -1,6 +1,6 @@
 const config = {
   pais: {
-    endpoint: 'https://www.pais.co.il/lotto/showMoreResults.aspx'
+    endpoint: '[PAIS_ENDPOINT]'
   }
 };
 
