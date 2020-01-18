@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 export class ConfigServerService {
 
   get apiURL(): string {
-    return environment.serverEndpoint;
+    return environment.server.endpoint;
   }
 
 }
