@@ -1,0 +1,29 @@
+service: double-lotto-il-results-api
+
+package:
+  individually: true
+  include:
+    - ../../node_modules/**
+    - ../../config/**
+    - ../../utils/**
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-west-2
+  tracing:
+    apiGateway: true
+    lambda: true
+
+functions:
+  # Fetches Pais results by given id
+  getPaisResultsById:
+    handler: get-pais-results-by-id.main
+    name: doubleLottoIL-getPaisResultById
+    events:
+      - http:
+          path: results/pais/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
