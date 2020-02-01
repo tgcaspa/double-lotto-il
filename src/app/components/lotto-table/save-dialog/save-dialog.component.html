@@ -55,13 +55,13 @@
 
 <mat-dialog-actions>
     <button type="button"
-            class="btn btn-outline-primary"
+            class="btn"
             mat-dialog-close
             translate>Close
     </button>
     <button type="submit"
             [disabled]="form.invalid"
-            class="btn btn-outline-primary"
+            class="btn btn-primary btn-save"
             (click)="saveUserResults()"
             translate>
         <fa name="check"></fa> Save
