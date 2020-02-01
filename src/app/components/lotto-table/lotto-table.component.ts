@@ -34,7 +34,8 @@ export class LottoTableComponent implements OnInit {
 
     openDialog(): void {
       const dialogRef = this.dialog.open(SaveDialogComponent, {
-        data: this.prepareSaveData(this.formBuilder.getValue())
+        data: this.prepareSaveData(this.formBuilder.getValue()),
+        maxWidth: '90vw'
       });
 
       dialogRef
