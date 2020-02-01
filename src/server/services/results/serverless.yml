@@ -1,4 +1,6 @@
 service: double-lotto-il-results-api
+app: double-lotto-il
+org: tgcaspa
 
 package:
   individually: true
