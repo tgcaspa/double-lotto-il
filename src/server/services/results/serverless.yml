@@ -2,6 +2,8 @@ service: double-lotto-il-results-api
 app: double-lotto-il
 org: tgcaspa
 
+custom: ${file(../../serverless.common.yml):custom}
+
 package:
   individually: true
   include:
@@ -18,14 +20,34 @@ provider:
     apiGateway: true
     lambda: true
 
+  # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    stage: ${self:custom.stage}
+    resourcesStage: ${self:custom.resourcesStage}
+
 functions:
-  # Fetches Pais results by given id
   getPaisResultsById:
     handler: get-pais-results-by-id.main
     name: doubleLottoIL-getPaisResultById
+    description: Fetches Pais results by given id
     events:
       - http:
           path: results/pais/{id}
           method: get
           cors: true
-          authorizer: aws_iam
+          # authorizer: aws_iam
+          response:
+            headers:
+              Content-Type: "'application/json'"
+            statusCodes:
+              200:
+                pattern: '.*"statusCode": 200,.*'
+                headers:
+                  Content-Type: "'application/json'"
+              400:
+                pattern: '.*"statusCode": 400,.*'
+                template:
+                  application/json: $input.path("$.errorMessage")
+                headers:
+                  Content-Type: "'application/json'"
