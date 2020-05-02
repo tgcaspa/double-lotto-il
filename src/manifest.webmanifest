@@ -1,0 +1,22 @@
+{
+  "name": "דאבל לוטו IL",
+  "short_name": "דאבל לוטו IL",
+  "description": "מרנדר ומשווה תוצאות של המספרי המזל שלך מול מפעל הפיס.",
+  "background_color": "#fefadf",
+  "theme_color": "#fefadf",
+  "icons": [
+    {
+      "src": "assets/images/pais-logo-114x129.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/pais-logo-159x180.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}

@@ -28,6 +28,7 @@
               "src/assets",
               "src/CNAME",
               "src/200.html",
+              "src/manifest.webmanifest",
               "src/sw.js"
             ],
             "styles": [
@@ -105,6 +106,7 @@
               "src/assets",
               "src/CNAME",
               "src/200.html",
+              "src/manifest.webmanifest",
               "src/sw.js"
             ],
             "styles": [
