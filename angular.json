@@ -27,7 +27,9 @@
               "src/favicon.ico",
               "src/assets",
               "src/CNAME",
-              "src/200.html"
+              "src/200.html",
+              "src/manifest.webmanifest",
+              "src/sw.js"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -103,7 +105,9 @@
               "src/favicon.ico",
               "src/assets",
               "src/CNAME",
-              "src/200.html"
+              "src/200.html",
+              "src/manifest.webmanifest",
+              "src/sw.js"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
