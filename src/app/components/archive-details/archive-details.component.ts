@@ -45,7 +45,7 @@ export class ArchiveDetailsComponent extends Archive {
     //   this.onArchiveIdSelected.next(lotteryId);
     // }
 
-    archiveIdSelected(lotteryId: number) {
+    archiveIdSelected(lotteryId: number): void {
         this.resultsSvc
             .getResultsByIdFromPais(new ResultModel({lotteryId}))
             .subscribe(

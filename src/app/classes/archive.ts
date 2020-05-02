@@ -32,6 +32,6 @@ export abstract class Archive {
       return lastId + dir;
     }
 
-    abstract archiveIdSelected(lotteryId: number);
+    abstract archiveIdSelected(lotteryId: number): void;
 
 }
