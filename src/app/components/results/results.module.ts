@@ -1,28 +1,28 @@
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
-import { MdDialogModule, MdProgressBarModule } from "@angular/material";
-import { AlertModule, BsDropdownModule } from "ngx-bootstrap";
-import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AlertModule } from 'ngx-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-import { JoinPipeModule } from "../../pipes/join.pipe";
-import { ResultsService } from "../../services/results.service";
-import { ArchiveService } from "../../services/archive.service";
-import { ResultsComponent } from "./results.component";
-import { CompareDialogComponent } from "./compare-dialog/compare-dialog.component";
-import { UserResultsComponent } from "./user-results/user-results.component";
-import { PaisResultComponent } from "./pais-result/pais-result.component";
-import { ResultArchiveDetailsComponent } from "./pais-result/archive-details/archive-details.component";
+import { ArchiveDetailsModule } from '../archive-details/archive-details.module';
+import { JoinPipeModule } from '../../pipes/join.pipe';
+import { ResultsService } from '../../services/results.service';
+import { ArchiveService } from '../../services/archive.service';
+import { ResultsComponent } from './results.component';
+import { CompareDialogComponent } from './compare-dialog/compare-dialog.component';
+import { UserResultsComponent } from './user-results/user-results.component';
+import { PaisResultComponent } from './pais-result/pais-result.component';
 
 @NgModule({
     declarations: [
         ResultsComponent,
         UserResultsComponent,
         CompareDialogComponent,
-        PaisResultComponent,
-        ResultArchiveDetailsComponent
+        PaisResultComponent
     ],
     entryComponents: [
         CompareDialogComponent
@@ -30,13 +30,13 @@ import { ResultArchiveDetailsComponent } from "./pais-result/archive-details/arc
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MdProgressBarModule,
-        MdDialogModule,
+        MatProgressBarModule,
+        MatDialogModule,
         JoinPipeModule,
-        AngularFontAwesomeModule,
-        BsDropdownModule.forRoot(),
-        AlertModule.forRoot(),
         TranslateModule,
+        ArchiveDetailsModule,
+        AlertModule.forRoot(),
+        AngularFontAwesomeModule,
         RouterModule.forChild([
             {
                 path: '',
@@ -47,6 +47,6 @@ import { ResultArchiveDetailsComponent } from "./pais-result/archive-details/arc
     providers: [
         ResultsService,
         ArchiveService
-]
+    ]
 })
 export class ResultsModule {}

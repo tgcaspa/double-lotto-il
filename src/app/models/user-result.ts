@@ -1,17 +1,25 @@
-import { ResultModel } from "./result";
+import { UserModel } from './user';
+import { IResult } from '../interfaces/iresult.interface';
+import { IUser } from '../interfaces/iuser.interface';
 
-declare let _: any;
+export type IUserResult =
+  IUser
+  & Pick<IResult, 'lotteryId'>
+  & { results: IResult[]; };
 
-export class UserResultModel extends ResultModel implements IUser {
-    passport: number;
-    phone: string;
+export class UserResultModel implements IUserResult {
+  lotteryId: number;
+  results: IResult[];
+  passport: string;
+  phone: string;
 
-    constructor(attr?: object) {
-        attr = _.assign({}, attr);
-        super(attr);
+  constructor(attr?: Partial<IUserResult>) {
+    attr = Object.assign({}, attr);
 
-        this.passport = attr['passport'] || 0;
-        this.phone = attr['phone'] || "";
-    }
+    this.lotteryId = attr.lotteryId;
+    this.results = attr.results;
+
+    Object.assign(this, new UserModel(attr));
+  }
 
 }

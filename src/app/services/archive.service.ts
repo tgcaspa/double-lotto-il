@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ResultModel } from "../models/result";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from 'rxjs';
+import { ResultModel } from '../models/result';
 
 @Injectable()
 export class ArchiveService {

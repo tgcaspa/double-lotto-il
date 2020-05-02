@@ -1,4 +1,4 @@
-interface IUser {
-    passport: number;
+export interface IUser {
+    passport: string;
     phone: string;
 }

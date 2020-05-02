@@ -1,7 +1,7 @@
-import { Component, Inject, Output, EventEmitter, OnInit } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserModel } from "../../../models/user";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserModel } from '../../../models/user';
 
 @Component({
     selector: 'app-compare-dialog',
@@ -11,19 +11,19 @@ import { UserModel } from "../../../models/user";
 export class CompareDialogComponent implements OnInit {
 
     form: FormGroup;
-    hasSessionUser: boolean = false;
+    hasSessionUser = false;
 
-    constructor(@Inject(MD_DIALOG_DATA) public data: any,
-                public dialogRef: MdDialogRef<CompareDialogComponent>,
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+                public dialogRef: MatDialogRef<CompareDialogComponent>,
                 private fb: FormBuilder) {
         this.form = fb.group({
-            'passport' : ['', Validators.compose([
+            passport : ['', Validators.compose([
                 Validators.required,
-                Validators.pattern("[0-9]{1,4}")
+                Validators.pattern('[0-9]{1,4}')
             ])],
-            'phone' : ['', Validators.compose([
+            phone : ['', Validators.compose([
                 Validators.required,
-                Validators.pattern("[0-9]{2,3}-?[0-9]+")
+                Validators.pattern('[0-9]{2,3}-?[0-9]+')
             ])]
         });
     }
@@ -32,7 +32,7 @@ export class CompareDialogComponent implements OnInit {
         const storage = sessionStorage.getItem('USER');
         const user = new UserModel(JSON.parse(storage));
 
-        if(user.passport && user.phone) {
+        if (user.passport && user.phone) {
             this.form.get('passport').setValue(user.passport);
             this.form.get('phone').setValue(user.phone);
             this.hasSessionUser = true;
@@ -40,7 +40,7 @@ export class CompareDialogComponent implements OnInit {
     }
 
     compareUserResults() {
-        if(this.form.valid) {
+        if (this.form.valid) {
             this.dialogRef.close(
                 new UserModel(this.form.value)
             );

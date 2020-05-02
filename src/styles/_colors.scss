@@ -1,0 +1,16 @@
+/* import the necessary Bootstrap files */
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+
+$yellow: #fde882;
+$yellow-light: #fefadf;
+$red: #e92828;
+$blue: #27304A;
+$pink: #ffe0e6;
+
+
+$theme-colors: (
+  'primary': $yellow,
+  'secondary': $red
+);

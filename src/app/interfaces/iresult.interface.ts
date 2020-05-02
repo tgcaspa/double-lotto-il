@@ -1,5 +1,5 @@
-interface IResult {
-    lottery_id: number;
+export interface IResult {
+    lotteryId: number;
     timestamp: number;
     regular: number[];
     strong: number[];

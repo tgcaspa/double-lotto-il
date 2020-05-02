@@ -1,94 +1,48 @@
-<!-- archive-details -->
-<app-archive-details [last-result]="paisLastResult"
-                     [dir]="1"
-                     (onArchiveIdSelected)="archiveIdSelected($event)">
-</app-archive-details>
-<!-- end archive-details -->
+<div *ngIf="paisLastResult$ | async"
+      class="mb-3">
+    <!-- archive-details -->
+    <app-lotto-table-archive-details
+        [last-result]="paisLastResult$ | async"
+        [direction]="1"
+        [show-date]="false"
+        [title]="'Lottery Numbers No.'"
+        (onArchiveIdSelected)="archiveIdSelected($event)">
+    </app-lotto-table-archive-details>
+    <!-- end archive-details -->
+  </div>
 
 <div class="text-center">
-    <img src="../../../assets/images/double-lotto-logo.png"
-         class="img-fluid"
-         alt="{{'Double Lottery'|translate}}">
+  <img src="/assets/images/double-lotto-logo.png"
+        class="img-fluid mb-3"
+        alt="{{'Double Lottery'|translate}}"
+        (click)="formBuilder?.generateNumbers()">
 </div>
+
+<ng-container *ngIf="paisLastResult$ | async; else contentLoading">
+  <app-lotto-table-form-builder></app-lotto-table-form-builder>
+
+  <!-- controls-wrap -->
+  <div class="row controls-wrap mt-3">
+    <div class="col alert-wrap" *ngIf="pageMessage">
+      <alert type="success" class="font-weight-normal" dir="rtl">
+        <span translate>{{pageMessage}}</span>.
+      </alert>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-right">
+      <button mat-raised-button
+              class="btn btn-primary btn-save w-100"
+              [disabled]="!formBuilder?.hasValue()"
+              (click)="openDialog()"
+              translate>
+        <fa name="star"></fa> Save Lucky Numbers
+      </button>
+    </div>
+  </div>
+  <!-- end controls-wrap -->
+</ng-container>
 
 <ng-template #contentLoading>
-    <md-progress-bar mode="indeterminate" class="mt-3"></md-progress-bar>
+  <mat-progress-bar mode="indeterminate" class="mt-3"></mat-progress-bar>
 </ng-template>
-
-<div *ngIf="paisLastResult; else contentLoading">
-    <!-- lotto-table -->
-    <div class="row text-center numbers-wrap" dir="ltr">
-        <!-- regular-number -->
-        <section class="col regular-nums">
-            <div class="row">
-                <div class="col"><br></div>
-            </div>
-            <div class="row table-wrap">
-                <div class="col-3 cell-item title">
-                    <div>
-                        <strong translate>
-                            Table <span>1</span>
-                        </strong>
-                        <fa name="caret-right pull-right m-t-5"></fa>
-                    </div>
-                </div>
-                <div *ngFor="let value of regularCells; let ix = index" class="d-inline-block">
-                    <div class="br" *ngIf="isNewLine_regular(ix)"></div>
-                    <div class="col cell-item mb-0">
-                        <span class="title text-center">{{ix+1}}</span>
-                        <span class="input text-center"
-                              [class.selected]="value === 1"
-                              (click)="cellClicked($event, ix, 'regular')">_</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- end regular-numbers -->
-        <!-- strong numbers -->
-        <section class="col-2 strong-nums">
-            <div class="row">
-                <div class="col header-title font-weight-bold" translate>
-                    <fa name="caret-down"></fa> Strong
-                </div>
-            </div>
-            <div class="row table-wrap">
-                <div class="col cell-item title">
-                    <fa name="caret-right"></fa>
-                </div>
-                <div class="col cell-item mb-1" *ngFor="let value of strongCells; let ix = index">
-                    <span class="title text-center">{{ix+1}}</span>
-                    <span class="input text-center"
-                          [class.selected]="value === 1"
-                          (click)="cellClicked($event, ix, 'strong')">_</span>
-                </div>
-            </div>
-        </section>
-        <!-- end strong-numbers -->
-    </div>
-    <!-- end lotto-table -->
-    <!-- controls-wrap -->
-    <div class="row controls-wrap mt-30">
-        <div class="col alert-wrap" *ngIf="pageMessage">
-            <alert type="success" class="font-weight-normal" dir="rtl">
-                <span translate>{{pageMessage}}</span>.
-            </alert>
-        </div>
-        <div class="col-6 text-left">
-            <button class="btn btn-outline-primary btn-generate"
-                    (click)="generateNumbers()"
-                    translate>
-                <fa name="star-o"></fa> Do Lottery
-            </button>
-        </div>
-        <div class="col-6 text-right">
-            <button md-raised-button
-                    class="btn btn-outline-primary btn-save"
-                    [disabled]="!isNumbersAreSelected()"
-                    (click)="openDialog()"
-                    translate>
-                <fa name="thumbs-o-up"></fa> Go For It
-            </button>
-        </div>
-    </div>
-    <!-- end controls-wrap -->
-</div>

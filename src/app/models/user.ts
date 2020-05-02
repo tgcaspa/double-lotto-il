@@ -1,16 +1,15 @@
-import { CommonModel } from "./common";
-
-declare let _: any;
+import { CommonModel } from './common';
+import { IUser } from '../interfaces/iuser.interface';
 
 export class UserModel extends CommonModel implements IUser {
-    passport: number;
+    passport: string;
     phone: string;
 
-    constructor(attr?: object) {
-        attr = _.assign({}, attr);
+    constructor(attr?: Partial<IUser>) {
+        attr = Object.assign({}, attr);
         super(attr);
 
-        this.passport = attr['passport'] || 0;
-        this.phone = attr['phone'] || "";
+        this.passport = attr.passport || '';
+        this.phone = attr.phone || '';
     }
 }

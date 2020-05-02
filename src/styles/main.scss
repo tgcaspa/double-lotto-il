@@ -1,0 +1,49 @@
+@import "colors";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~bootstrap/scss/bootstrap';
+
+body {
+  background-color: $yellow-light;
+  direction: rtl !important;
+  font-family: 'Assistant', sans-serif;
+}
+
+.row {
+  line-height: 24px;
+}
+
+.btn {
+  border-radius: 17px;
+  font-weight: bold;
+  min-width: 50%;
+
+  &:not(:disabled) { cursor: pointer; }
+  &:disabled {
+    cursor: not-allowed;
+    border-color: $blue;
+    color: $blue;
+  }
+  &:focus { outline: none; }
+
+  &-primary,
+  &-primary:active,
+  &-primary:focus {
+    color: $red;
+    border-color: $red;
+  }
+}
+
+*[dropdown] {
+  position: relative;
+  &.show ul.dropdown-menu {
+    display: block;
+  }
+}
+
+.mat-dialog-container {
+  background-color: $yellow-light;
+}
+
+.mat-snack-bar-container {
+  text-align: right;
+}

@@ -1,23 +1,25 @@
-import { Injectable } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import { SnackBarComponent } from "../components/snack-bar/snack-bar.component";
-import { MdSnackBar, MdSnackBarConfig } from "@angular/material";
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
+import { MatSnackBarConfig, MatSnackBar } from '@angular/material/snack-bar';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PageNotificationService {
 
-    static optionsDefault: MdSnackBarConfig = {
+    static optionsDefault: MatSnackBarConfig = {
         duration: 3000,
         data: {}
     };
 
     private body: string;
     private code: number;
-    private options: MdSnackBarConfig;
+    private options: MatSnackBarConfig;
 
     constructor(private translateSvc: TranslateService,
-                private snackBar: MdSnackBar) {
-        this.body = "";
+                private snackBar: MatSnackBar) {
+        this.body = '';
         this.code = 0;
         this.options = PageNotificationService.optionsDefault;
     }
@@ -25,23 +27,23 @@ export class PageNotificationService {
     public set(...params): this {
         if (!params.length) {
             throw new Error('No parameters were specified');
-        } else if (params[0].constructor.name === "Response") {
+        } else if (params[0].constructor.name === 'Response') {
             try {
-                let body = params[0].json();
+                const body = params[0].json();
                 if (typeof body === 'string') {
                     this.body = body;
                 } else {
                     this.body = params[0].statusText;
                 }
             } catch (e) {
-                this.body = params[0].toString() || "";
+                this.body = params[0].toString() || '';
             }
             this.code = params[0].status || 0;
         } else {
-            this.body = params[0].toString() || "";
+            this.body = params[0].toString() || '';
             this.code = params[1] || 0;
 
-            let options = params.slice(-1).shift() || {};
+            const options = params.slice(-1).shift() || {};
             this.options = Object.assign(
                 PageNotificationService.optionsDefault,
                 this.options,
@@ -55,27 +57,29 @@ export class PageNotificationService {
     }
 
     public show(): void {
-        let codeClass;
-        switch (this.code) {
-            case 200:
-                codeClass = 'color-success';
-                break;
-            case 400:
-            default:
-                codeClass = 'color-warning';
-                break;
-        }
+        const codeClass = this.fetchClassBy(this.code);
 
-        if(codeClass === 'color-warning') {
+        if (codeClass === 'color-warning') {
             console.error(this.body);
         }
 
         this.options.data = {
             body: this.body,
             code: this.code,
-            codeClass: codeClass
+            codeClass
         };
+
         this.snackBar.openFromComponent(SnackBarComponent, this.options);
     }
 
+    private fetchClassBy(code: number): string {
+      switch (this.code) {
+        case 200:
+          return 'color-success';
+
+        case 400:
+        default:
+          return 'color-warning';
+      }
+    }
 }

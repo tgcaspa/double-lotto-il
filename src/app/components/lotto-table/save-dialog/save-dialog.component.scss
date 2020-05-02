@@ -1,0 +1,14 @@
+:host {
+  direction: rtl;
+
+  .table-results {
+    .thead {
+      font-size: 0.8rem;
+    }
+    .tbody {
+      max-height: 60px;
+      overflow: auto;
+    }
+  }
+
+}

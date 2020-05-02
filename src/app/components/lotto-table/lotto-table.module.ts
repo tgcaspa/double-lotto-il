@@ -1,24 +1,29 @@
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms";
-import { MdDialogModule, MdProgressBarModule } from "@angular/material";
-import { TranslateModule } from "@ngx-translate/core";
-import { AlertModule, BsDropdownModule } from "ngx-bootstrap";
-import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
+import { AlertModule } from 'ngx-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-import { JoinPipeModule } from "../../pipes/join.pipe";
-import { ResultsService } from "../../services/results.service";
-import { LottoTableComponent } from "./lotto-table.component";
-import { SaveDialogComponent } from "./save-dialog/save-dialog.component";
-import { LottoTableArchiveDetailsComponent } from "./archive-details/archive-details.component";
-import { ArchiveService } from "../../services/archive.service";
+import { JoinPipeModule } from '../../pipes/join.pipe';
+import { ResultsService } from '../../services/results.service';
+import { LottoTableComponent } from './lotto-table.component';
+import { SaveDialogComponent } from './save-dialog/save-dialog.component';
+import { ArchiveService } from '../../services/archive.service';
+import { LottoTableArchiveDetailsComponent } from './archive-details/archive-details.component';
+import { ArchiveDetailsModule } from '../archive-details/archive-details.module';
+import { LottoTableFormBuilderComponent } from './form-builder/form-builder.component';
 
 @NgModule({
     declarations: [
         LottoTableComponent,
         SaveDialogComponent,
-        LottoTableArchiveDetailsComponent
+        LottoTableArchiveDetailsComponent,
+        LottoTableFormBuilderComponent
     ],
     entryComponents: [
         SaveDialogComponent
@@ -27,12 +32,13 @@ import { ArchiveService } from "../../services/archive.service";
         CommonModule,
         ReactiveFormsModule,
         AngularFontAwesomeModule,
-        MdProgressBarModule,
-        MdDialogModule,
+        MatProgressBarModule,
+        MatDialogModule,
+        MatMenuModule,
         JoinPipeModule,
         TranslateModule,
         AlertModule.forRoot(),
-        BsDropdownModule.forRoot(),
+        ArchiveDetailsModule,
         RouterModule.forChild([
             {
                 path: '',

@@ -1,0 +1,9 @@
+:host {
+  text-align: center;
+
+  ::ng-deep {
+    mat-select {
+        width: 5rem;
+      }
+  }
+}

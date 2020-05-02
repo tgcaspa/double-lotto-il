@@ -1,0 +1,21 @@
+<form [formGroup]="selectedResultForm">
+  <div class="form-group mb-0">
+    <strong translate>{{title}}</strong>
+
+    <!-- <mat-select formControlName="lotteryId">
+      <mat-optgroup [label]="'Last Lotteries'">
+        <mat-option *ngFor="let id of lottoArchiveList" [value]="id">
+          {{id}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-select> -->
+
+    <strong class="mx-1">{{selectedResultForm?.get('lotteryId')?.value}}</strong>
+  </div>
+
+  <div *ngIf="showDate"
+       class="form-group mb-3">
+    {{'Lottery Date'|translate}}
+    {{selectedResultForm?.get('timestamp')?.value|date:'HH:mm dd/MM/y'}}
+  </div>
+</form>
