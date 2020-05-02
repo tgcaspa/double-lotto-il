@@ -28,8 +28,7 @@
               "src/assets",
               "src/CNAME",
               "src/200.html",
-              "src/manifest.webmanifest",
-              "src/sw.js"
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -106,8 +105,7 @@
               "src/assets",
               "src/CNAME",
               "src/200.html",
-              "src/manifest.webmanifest",
-              "src/sw.js"
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
